@@ -1,1 +1,3 @@
-# bigpaytask
+# Algorithm description
+
+## Terms
