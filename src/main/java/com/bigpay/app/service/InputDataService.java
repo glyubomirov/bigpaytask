@@ -1,5 +1,7 @@
-package com.bigpay.app.component;
+package com.bigpay.app.service;
 
+import com.bigpay.app.domain.input.InputDataMap;
+import com.bigpay.app.component.InputValidatorComponent;
 import com.bigpay.app.constants.Constants;
 import com.bigpay.app.domain.input.LetterInputData;
 import com.bigpay.app.domain.input.RoadInputData;
@@ -12,7 +14,7 @@ import java.util.Scanner;
 /**
  * Contains all input data as java object
  */
-public class InputDataReaderComponent {
+public class InputDataService {
 
     /**
      * Reads input data from default input

@@ -1,4 +1,4 @@
-package com.bigpay.app.component;
+package com.bigpay.app.domain.input;
 
 import com.bigpay.app.domain.input.LetterInputData;
 import com.bigpay.app.domain.input.RoadInputData;
