@@ -31,10 +31,10 @@ public class RoadMapServiceTest {
 
         assertEquals(roadMap.getStations().size(), 3);
 
-        assertEquals(roadMap.getRoadList().size(), 2);
+        assertEquals(roadMap.getRoads().size(), 2);
 
-        assertEquals(roadMap.getLetterList().size(), 1);
+        assertEquals(roadMap.getLetters().size(), 1);
 
-        assertEquals(roadMap.getTrainList().size(), 1);
+        assertEquals(roadMap.getTrains().size(), 1);
     }
 }

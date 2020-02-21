@@ -13,6 +13,11 @@ public class RoadMap {
     private int[] stationMatrix;
 
     /**
+     * Number of rows in stationMatrix
+     */
+    private int stationMatrixRawCount;
+
+    /**
      * List of all stations
      */
     private Station[] stationList;
@@ -46,6 +51,7 @@ public class RoadMap {
         this.letterList = letterList.clone();
         this.trainList = trainList.clone();
 
+        this.stationMatrixRawCount = stationList.length;
         this.stationMatrix = this.generateStationMatrix(stationList, roadList);
     }
 
@@ -85,23 +91,27 @@ public class RoadMap {
      *
      * @return unmodifiable list of stations
      */
-    public Set<Station> getStations() {
-        return Set.of(this.stationList);
+    public List<Station> getStations() {
+        return List.of(this.stationList);
     }
 
-    public Set<Station> getStationList() {
-        return Set.of(stationList);
-    }
-
-    public Set<Road> getRoadList() {
+    public Set<Road> getRoads() {
         return Set.of(roadList);
     }
 
-    public Set<Letter> getLetterList() {
+    public Set<Letter> getLetters() {
         return Set.of(letterList);
     }
 
-    public Set<Train> getTrainList() {
+    public Set<Train> getTrains() {
         return Set.of(trainList);
+    }
+
+    public int[] getStationMatrix() {
+        return stationMatrix;
+    }
+
+    public int getStationMatrixRawCount() {
+        return stationMatrixRawCount;
     }
 }
