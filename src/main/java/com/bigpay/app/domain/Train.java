@@ -1,6 +1,8 @@
 package com.bigpay.app.domain;
 
-import java.util.Arrays;
+import com.bigpay.app.component.ActionTrackerComponent;
+import com.bigpay.app.domain.action.*;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -46,30 +48,38 @@ public class Train {
     /**
      * Time that trains spends on the road
      */
-    private int roadTime;
+    private int timeOnRoad;
+
+    /**
+     *
+     */
+    private ActionTrackerComponent actionTrackerComponent;
 
     public Train(String name, Station station, int capacity) {
         this.name = name;
         this.station = station;
         this.capacity = capacity;
         this.letters = new HashSet<>();
+        this.actionTrackerComponent = ActionTrackerComponent.getInstance();
     }
 
     /**
      * Move train on the road, departures and arrives at station
      *
-     * @param road Road that train moves on
      * @return true if train has moved
      */
-    public boolean move(Road road) {
-        if (this.road != road) { // if train is on this road
+    public boolean move() {
+
+        if (this.road == null) {
             return false;
         }
 
         if (this.station != null) { // if Train is on the Station
            return false;
         } else { // else train is not the station
-            this.roadTime++; // train continue moving on the road
+            this.timeOnRoad++; // train continue moving on the road
+
+            this.actionTrackerComponent.track(ActionType.MOVE, null, road, this, null);
 
             this.arrive();
         }
@@ -78,13 +88,13 @@ public class Train {
     }
 
     /**
-     * Processes train departure at next station
+     * Processes train depart at next station
      *
      * @param road
      * @param letters
-     * @return true if departure is successful
+     * @return true if depart is successful
      */
-    public boolean departure(Road road, Set<Letter> letters) {
+    public boolean depart(Road road, Set<Letter> letters) {
         if (!this.station.getRoads().contains(road)){ // if Station has not corresponding Road
             return false;
         } else { // else Station has corresponding Road than train starts moving on the road
@@ -93,11 +103,15 @@ public class Train {
             }
         }
 
+        this.road = road;
         this.nextStation = this.road.getCounterStation(this.station);
         this.station.unloadLetters(letters);
         this.loadLetters(letters);
+        this.actionTrackerComponent.track(ActionType.DEPART, this.station, road, this, null);
         this.station = null;
-        this.roadTime = 1;
+        this.timeOnRoad = 0;
+
+        move();
 
         return true;
     }
@@ -108,12 +122,14 @@ public class Train {
      * @return true if arrival is successful
      */
     private boolean arrive() {
-        if (this.roadTime >= this.road.getTime()) { // if train arrives at the next station
+        if (this.timeOnRoad >= this.road.getTime()) { // if train arrives at the next station
+
             this.station = this.nextStation;
             this.nextStation = null;
             this.road = null;
-            this.roadTime = 0;
+            this.timeOnRoad = 0;
             this.station.loadLetters(this.letters);
+            this.actionTrackerComponent.track(ActionType.ARRIVE, this.station, null, this, null);
             this.unloadLetters();
             return true;
         }
@@ -132,11 +148,13 @@ public class Train {
 
         this.letters.addAll(letters);
         this.size = this.calculateLoadSize(this.letters);
+        this.actionTrackerComponent.track(ActionType.LOAD, this.station, null, this, this.letters);
 
         return true;
     }
 
-    public void unloadLetters() {
+    private void unloadLetters() {
+        this.actionTrackerComponent.track(ActionType.UNLOAD, this.station, null, this, this.letters);
         this.station.loadLetters(this.letters);
         this.letters.clear();
         this.size = 0;
@@ -176,7 +194,7 @@ public class Train {
         return Set.copyOf(this.letters);
     }
 
-    public int getRoadTime() {
-        return this.roadTime;
+    public int getTimeOnRoad() {
+        return this.timeOnRoad;
     }
 }

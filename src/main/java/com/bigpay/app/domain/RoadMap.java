@@ -87,28 +87,24 @@ public class RoadMap {
         return roadMatrix;
     }
 
-    /**
-     *
-     * @return unmodifiable list of stations
-     */
-    public List<Station> getStations() {
-        return List.of(this.stationList);
+    public Station[] getStations() {
+        return this.stationList.clone();
     }
 
-    public Set<Road> getRoads() {
-        return Set.of(roadList);
+    public Road[] getRoads() {
+        return roadList.clone();
     }
 
-    public Set<Letter> getLetters() {
-        return Set.of(letterList);
+    public Letter[] getLetters() {
+        return letterList.clone();
     }
 
-    public Set<Train> getTrains() {
-        return Set.of(trainList);
+    public Train[] getTrains() {
+        return trainList.clone();
     }
 
     public int[] getStationMatrix() {
-        return stationMatrix;
+        return stationMatrix.clone();
     }
 
     public int getStationMatrixRawCount() {

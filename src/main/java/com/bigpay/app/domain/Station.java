@@ -1,6 +1,7 @@
 package com.bigpay.app.domain;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -28,11 +29,25 @@ public class Station {
      */
     private Set<Train> trains;
 
-    public Station(char name) {
+    /**
+     * Sequence index from inout data
+     */
+    private int index;
+
+    /**
+     *
+     * @param name
+     */
+    public Station(char name, int index) {
         this.name = name;
+        this.index = index;
         this.trains = new HashSet<>();
         this.roads = new HashSet<>();
         this.letters = new HashSet<>();
+    }
+
+    public int getIndex() {
+        return index;
     }
 
     public char getName() {
@@ -64,10 +79,17 @@ public class Station {
     }
 
     public void loadLetters(Set<Letter> letters) {
+        for (Letter letter: letters) {
+            letter.addDest(this);
+        }
         this.letters.addAll(letters);
     }
 
     public void unloadLetters(Set<Letter> letters) {
+        if (letters == null) {
+            return;
+        }
+
         this.letters.removeAll(letters);
     }
 }

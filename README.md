@@ -1,6 +1,11 @@
-# Overview
+# BigPay Task
 
-## Installation
+## Getting Started
+
+### Prerequisites
+Project requires [Open JDK 13](https://www.azul.com/downloads/zulu-community/?&version=java-13&architecture=x86-64-bit&package=jdk) and [Maven](https://maven.apache.org/) 
+
+### Installation
 Clone project from [GitHub](https://github.com/glyubomirov/bigpaytask/) to empty folder
 
 ```bash
@@ -13,13 +18,13 @@ Go to project directory
 cd ./bigpayproject/
 ```
 
-Use the package manager [maven](https://maven.apache.org/) to install build
+Use the package manager [maven](https://maven.apache.org/) to package build
 
 ```bash
 mvn package
 ```
 
-## Run Project
+### Run Project
 Go to project directory and execute
 
 ```bash
@@ -40,5 +45,5 @@ java -jar ./target/BigPayTask.jar
 
 * **Total Nearest Letter Path** - Distance between all empty trains and closest station with undelivered letters
 
-# Algorithm
+## Algorithm
 

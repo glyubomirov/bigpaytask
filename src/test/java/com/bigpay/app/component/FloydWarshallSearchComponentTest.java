@@ -4,6 +4,7 @@ import com.bigpay.app.domain.Road;
 import com.bigpay.app.domain.RoadMap;
 import com.bigpay.app.domain.Station;
 import com.bigpay.app.domain.input.*;
+import com.bigpay.app.helper.SimpleInputDataMap;
 import com.bigpay.app.service.RoadMapService;
 import org.junit.Assert;
 import org.junit.Test;
@@ -17,48 +18,7 @@ public class FloydWarshallSearchComponentTest {
 
     @Test
     public void generateShortestPathTest() {
-        InputDataMap inputDataMap = new InputDataMap(
-                new StationInputData[]{
-                        new StationInputData('A'),
-                        new StationInputData('B'),
-                        new StationInputData('C'),
-                        new StationInputData('D'),
-                        new StationInputData('E'),
-                        new StationInputData('F'),
-                        new StationInputData('G'),
-                        new StationInputData('H'),
-                        new StationInputData('I'),
-                        new StationInputData('J'),
-                        new StationInputData('K'),
-                        new StationInputData('L'),
-                        new StationInputData('S')},
-                new RoadInputData[]{
-                        new RoadInputData('A', 'B', 3),
-                        new RoadInputData('A', 'D', 4),
-                        new RoadInputData('A', 'S', 7),
-                        new RoadInputData('B', 'D', 4),
-                        new RoadInputData('B', 'S', 2),
-                        new RoadInputData('B', 'H', 1),
-                        new RoadInputData('C', 'S', 3),
-                        new RoadInputData('C', 'L', 2),
-                        new RoadInputData('D', 'F', 5),
-                        new RoadInputData('E', 'G', 2),
-                        new RoadInputData('E', 'K', 5),
-                        new RoadInputData('F', 'H', 3),
-                        new RoadInputData('G', 'H', 2),
-                        new RoadInputData('I', 'J', 6),
-                        new RoadInputData('I', 'K', 4),
-                        new RoadInputData('I', 'L', 4),
-                        new RoadInputData('J', 'K', 4),
-                        new RoadInputData('J', 'L', 4)
-                },
-                new LetterInputData[]{
-                        new LetterInputData("D1", 'S', 'E', 5)
-                },
-                new TrainInputData[]{
-                        new TrainInputData("T1", 'S', 5)
-                }
-        );
+        InputDataMap inputDataMap = SimpleInputDataMap.getSimpleDataMap();
 
         RoadMap roadMap = RoadMapService.generate(inputDataMap);
 
@@ -92,7 +52,7 @@ public class FloydWarshallSearchComponentTest {
                 { 5,  2,  3,  6,  7,  6,  5,  3,  9,  9, 12,  5,  0}
         };
 
-        List<Station> stations = roadMap.getStations();
+        Station[] stations = roadMap.getStations();
 
         for (int i = 0; i < actualResult.length; i++) {
             for (int j = 0; j < actualResult[i].length; j++) {
@@ -112,8 +72,8 @@ public class FloydWarshallSearchComponentTest {
 
                 // Assert that first Road is connected to source Station and final Road to final station
                 if (i != j) {
-                    Station sourceStation = stations.get(i);
-                    Station targetStation = stations.get(j);
+                    Station sourceStation = stations[i];
+                    Station targetStation = stations[j];
 
 //                    System.out.println(String.format("%d, %d", i, j));
                     Assert.assertTrue(actualResult[i][j][0].getStations().contains(sourceStation));

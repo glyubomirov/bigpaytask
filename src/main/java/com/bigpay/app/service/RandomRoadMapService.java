@@ -16,7 +16,7 @@ public class RandomRoadMapService {
 
         Station[] stationList = new Station[stationCount];
         for (int i = 0; i < stationCount; i++) {
-            stationList[i] = new Station((char)(i + 65));
+            stationList[i] = new Station((char)(i + 65), i);
         }
 
         // create fully connected graph with random weights

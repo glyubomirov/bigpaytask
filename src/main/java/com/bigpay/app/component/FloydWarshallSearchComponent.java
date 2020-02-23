@@ -23,8 +23,8 @@ public class FloydWarshallSearchComponent {
         int[] stationMatrix = roadMap.getStationMatrix();
         int stationMatrixRawCount = roadMap.getStationMatrixRawCount();
 
-        List<Station> stations = roadMap.getStations();
-        Set<Road> roads = roadMap.getRoads();
+        Station[] stations = roadMap.getStations();
+        Set<Road> roads = Set.of(roadMap.getRoads());
 
         // Initial matrix
         Road [][][]firstRoadMatrix = new Road[stationMatrixRawCount][stationMatrixRawCount][];
@@ -33,8 +33,8 @@ public class FloydWarshallSearchComponent {
                 if (i == j) {
                     firstRoadMatrix[i][j] = new Road[0];
                 } else {
-                    Set<Road> sourceStationRoad = stations.get(i).getRoads();
-                    Set<Road> targetStationRoad = stations.get(j).getRoads();
+                    Set<Road> sourceStationRoad = stations[i].getRoads();
+                    Set<Road> targetStationRoad = stations[j].getRoads();
 
                     Set<Road> hasRoad = sourceStationRoad.stream().filter(targetStationRoad::contains)
                             .collect(Collectors.toSet());
@@ -76,8 +76,8 @@ public class FloydWarshallSearchComponent {
 
         for (int i = 0; i < stationMatrixRawCount; i++) {
             for (int j = i + 1; j < stationMatrixRawCount; j++) {
-                if (!resultRoadMatrix[i][j][0].getStations().contains(stations.get(i))) {
-                    if (!resultRoadMatrix[i][j][resultRoadMatrix[i][j].length - 1].getStations().contains(stations.get(j))) {
+                if (!resultRoadMatrix[i][j][0].getStations().contains(stations[i])) {
+                    if (!resultRoadMatrix[i][j][resultRoadMatrix[i][j].length - 1].getStations().contains(stations[j])) {
                         resultRoadMatrix[j][i] = resultRoadMatrix[i][j].clone();
                         ArrayUtils.reverse(resultRoadMatrix[i][j]);
                     }

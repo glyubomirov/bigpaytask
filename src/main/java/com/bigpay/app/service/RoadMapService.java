@@ -4,33 +4,33 @@ import com.bigpay.app.domain.*;
 import com.bigpay.app.domain.input.InputDataMap;
 import com.bigpay.app.domain.input.StationInputData;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
+/**
+ *
+ */
 public class RoadMapService {
 
     /**
      * Generates relational object data from input object data
      *
      * @param inputDataMap
-     * @return
+     * @return Generated road map from input data
      */
     public static RoadMap generate(InputDataMap inputDataMap) {
 
         // Generates Station relation object from Station input data
-        Station[] stations = Arrays.stream(inputDataMap.getStationList()).
-                map(station -> new Station(station.getName())).toArray(Station[]::new);
-
-        // Generate Map(Station Name -> Station Object)
-        Map<Character, Station> stationMap = new HashMap<>();
-
         StationInputData[] stationInputData = inputDataMap.getStationList();
 
-        for (int i = 0; i < stationInputData.length; i++) {
-            stationMap.put(stationInputData[i].getName(), stations[i]);
-        }
+        Station[] stations = IntStream.range(0, stationInputData.length)
+                .mapToObj(i -> new Station(stationInputData[i].getName(), i)).toArray(Station[]::new);
+
+        // Generate Map(Station Name -> Station Object)
+        Map<Character, Station> stationMap = Arrays.stream(stations)
+                .collect(Collectors.toMap(Station::getName, Function.identity()));
 
         // Generates Road relation object from Road input data
         Road[] roads = Arrays.stream(inputDataMap.getRoadList()).map(road -> new Road(
@@ -54,16 +54,19 @@ public class RoadMapService {
                 train.getCapacity())).
                 toArray(Train[]::new);
 
+        // Bind roads to each Station
         Arrays.stream(roads).forEach(road -> {
             road.getStations().forEach(station -> {
                 station.addRoad(road);
             });
         });
 
+        // Bind letters to each Station
         Arrays.stream(letters).forEach(letter -> {
             letter.getInitialDest().loadLetters(Set.of(letter));
         });
 
+        // Bind Trains to each Station
         Arrays.stream(trains).forEach(train -> {
             train.getStation().addTrains(Set.of(train));
         });

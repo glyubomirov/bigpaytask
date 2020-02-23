@@ -1,5 +1,7 @@
 package com.bigpay.app;
 
+import com.bigpay.app.component.FloydWarshallSearchComponent;
+import com.bigpay.app.domain.Road;
 import com.bigpay.app.domain.RoadMap;
 import com.bigpay.app.domain.input.InputDataMap;
 import com.bigpay.app.service.RoadMapService;
@@ -19,12 +21,13 @@ public class App
         // 2. Generate road map from input data
         RoadMap roadMap = RoadMapService.generate(inputDataMap);
 
-        System.out.println(roadMap);
+        // 3. Calculate shortest path between each two stations
+        Road[][][] shorestRoadMap = FloydWarshallSearchComponent.generateShortestPath(roadMap);
 
-        // 3. Perform Search solution for the task
+        // 4. Perform Search solution for the task
 
-        // 4. Transforms data in output format
+        // 5. Transforms data in output format
 
-        // 5. Writes output result
+        // 6. Writes output result
     }
 }
