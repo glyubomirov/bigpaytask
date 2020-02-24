@@ -67,7 +67,7 @@ public class RoadMap {
         /**
          * Generate Map(Station -> Station Index)
          */
-        Map<Character, Integer> stationMap = new HashMap<>();
+        Map<String, Integer> stationMap = new HashMap<>();
 
         for (int i = 0; i < stationList.length; i++) {
             stationMap.put(stationList[i].getName(), i);

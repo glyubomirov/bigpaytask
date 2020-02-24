@@ -2,7 +2,7 @@ package com.bigpay.app.service;
 
 import com.bigpay.app.domain.*;
 import com.bigpay.app.domain.input.*;
-import com.bigpay.app.helper.SimpleInputDataMap;
+import com.bigpay.app.helper.InputDataMapHelper;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -12,7 +12,7 @@ public class RoadMapServiceTest {
     @Test
     public void testRoadMapService() {
 
-        InputDataMap inputDataMap = SimpleInputDataMap.getSimpleDataMap();
+        InputDataMap inputDataMap = InputDataMapHelper.getSimpleDataMap();
 
         RoadMap roadMap = RoadMapService.generate(inputDataMap);
 

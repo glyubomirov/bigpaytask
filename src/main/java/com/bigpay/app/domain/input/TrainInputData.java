@@ -5,10 +5,10 @@ package com.bigpay.app.domain.input;
  */
 public class TrainInputData {
     private String name;
-    private char station;
+    private String station;
     private int capacity;
 
-    public TrainInputData(String name, char station, int capacity) {
+    public TrainInputData(String name, String station, int capacity) {
         this.name = name;
         this.station = station;
         this.capacity = capacity;
@@ -18,7 +18,7 @@ public class TrainInputData {
         return name;
     }
 
-    public char getStation() {
+    public String getStation() {
         return station;
     }
 

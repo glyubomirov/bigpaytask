@@ -12,7 +12,7 @@ public class Station {
     /**
      * Station name
      */
-    private char name;
+    private String name;
 
     /**
      * All letters on this station
@@ -38,7 +38,7 @@ public class Station {
      *
      * @param name
      */
-    public Station(char name, int index) {
+    public Station(String name, int index) {
         this.name = name;
         this.index = index;
         this.trains = new HashSet<>();
@@ -50,7 +50,7 @@ public class Station {
         return index;
     }
 
-    public char getName() {
+    public String getName() {
         return name;
     }
 

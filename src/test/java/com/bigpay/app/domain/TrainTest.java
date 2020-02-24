@@ -4,7 +4,7 @@ import com.bigpay.app.component.ActionTrackerComponent;
 import com.bigpay.app.component.GameComponent;
 import com.bigpay.app.domain.action.TrackableAction;
 import com.bigpay.app.domain.input.InputDataMap;
-import com.bigpay.app.helper.SimpleInputDataMap;
+import com.bigpay.app.helper.InputDataMapHelper;
 import com.bigpay.app.service.RoadMapService;
 import org.junit.Test;
 
@@ -16,7 +16,7 @@ public class TrainTest {
 
     @Test
     public void test() {
-        InputDataMap inputDataMap = SimpleInputDataMap.getSimpleDataMap();
+        InputDataMap inputDataMap = InputDataMapHelper.getSimpleDataMap();
         RoadMap roadMap = RoadMapService.generate(inputDataMap);
 
         Station[] stations = roadMap.getStations();

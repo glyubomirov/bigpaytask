@@ -12,7 +12,7 @@ public class TrainDepartActionTrack implements TrackableAction {
     protected String action;
 
     public TrainDepartActionTrack(Station station, Road road, Train train, Set<Letter> letters) {
-        this.action = String.format("Train %s departs from Station %c for Station %s",
+        this.action = String.format("Train %s departs from Station %s for Station %s",
                 train.getName(), station.getName(), road.getCounterStation(station).getName());
     }
 

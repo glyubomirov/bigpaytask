@@ -29,7 +29,7 @@ public class RoadMapService {
                 .mapToObj(i -> new Station(stationInputData[i].getName(), i)).toArray(Station[]::new);
 
         // Generate Map(Station Name -> Station Object)
-        Map<Character, Station> stationMap = Arrays.stream(stations)
+        Map<String, Station> stationMap = Arrays.stream(stations)
                 .collect(Collectors.toMap(Station::getName, Function.identity()));
 
         // Generates Road relation object from Road input data

@@ -13,7 +13,7 @@ public class TrainLoadActionTrack implements TrackableAction {
     protected String action;
 
     public TrainLoadActionTrack(Station station, Road road, Train train, Set<Letter> letters) {
-        this.action = String.format("Train %s loads letters %s on Station %c", train.getName(),
+        this.action = String.format("Train %s loads letters %s on Station %s", train.getName(),
                 letters.stream().map(Letter::getName).collect(Collectors.joining( "," )), station.getName());
     }
 

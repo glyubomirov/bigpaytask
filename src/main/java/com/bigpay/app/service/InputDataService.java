@@ -100,29 +100,6 @@ public class InputDataService {
     }
 
     /**
-     * Read only if we expect next line to be char value
-     *
-     * @return integer value
-     */
-    private static char readCharLine(Scanner scanner) {
-
-        String value = readLine(scanner);
-
-        if (value != null) {
-
-            if (value.length() == 1) {
-
-                return value.charAt(0);
-            } else {
-                throw new IllegalArgumentException(
-                        String.format("Unexpected argument length! Expected %s, but found %s", 1, value.length()));
-            }
-        } else {
-            throw new NumberFormatException("Non Integer value is not expected");
-        }
-    }
-
-    /**
      *
      * Reads and coverts line from string(with delimiter) to array e.g. delimiter comma(,) A,B,C,D
      *
@@ -149,9 +126,9 @@ public class InputDataService {
      */
     private static StationInputData readStation(Scanner scanner) {
 
-        char stationName = readCharLine(scanner);
+        String stationName = readLine(scanner);
 
-        InputValidatorComponent.validateStation(String.valueOf(stationName));
+        InputValidatorComponent.validateStation(stationName);
 
         return new StationInputData(stationName);
     }
@@ -168,7 +145,7 @@ public class InputDataService {
 
         InputValidatorComponent.validateRoad(roadData);
 
-        return new RoadInputData(roadData[0].charAt(0), roadData[1].charAt(0), Integer.parseInt(roadData[2]));
+        return new RoadInputData(roadData[0], roadData[1], Integer.parseInt(roadData[2]));
     }
 
     /**
@@ -183,8 +160,7 @@ public class InputDataService {
 
         InputValidatorComponent.validateLetter(roadData);
 
-        return new LetterInputData(roadData[0], roadData[1].charAt(0), roadData[2].charAt(0),
-                Integer.parseInt(roadData[3]));
+        return new LetterInputData(roadData[0], roadData[1], roadData[2], Integer.parseInt(roadData[3]));
     }
     /**
      * Reads Train line data from the input
@@ -198,6 +174,6 @@ public class InputDataService {
 
         InputValidatorComponent.validateTrain(trainData);
 
-        return new TrainInputData(trainData[0], trainData[1].charAt(0), Integer.parseInt(trainData[2]));
+        return new TrainInputData(trainData[0], trainData[1], Integer.parseInt(trainData[2]));
     }
 }

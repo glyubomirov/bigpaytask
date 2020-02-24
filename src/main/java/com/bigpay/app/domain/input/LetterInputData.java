@@ -5,11 +5,11 @@ package com.bigpay.app.domain.input;
  */
 public class LetterInputData {
     private String name;
-    private char sourceStation;
-    private char targetStation;
+    private String sourceStation;
+    private String targetStation;
     private int weight;
 
-    public LetterInputData( String name, char sourceStation, char targetStation, int weight ) {
+    public LetterInputData(String name, String sourceStation, String targetStation, int weight ) {
         this.name = name;
         this.sourceStation = sourceStation;
         this.targetStation = targetStation;
@@ -20,11 +20,11 @@ public class LetterInputData {
         return name;
     }
 
-    public char getSourceStation() {
+    public String getSourceStation() {
         return sourceStation;
     }
 
-    public char getTargetStation() {
+    public String getTargetStation() {
         return targetStation;
     }
 

@@ -12,7 +12,7 @@ public class TrainArriveActionTrack implements TrackableAction {
     protected String action;
 
     public TrainArriveActionTrack(Station station, Road road, Train train, Set<Letter> letters) {
-        this.action = String.format("Train %s arrives at station %c", train.getName(), station.getName());
+        this.action = String.format("Train %s arrives at station %s", train.getName(), station.getName());
     }
 
     public String toString() {

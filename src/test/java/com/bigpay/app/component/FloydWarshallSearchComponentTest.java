@@ -4,21 +4,20 @@ import com.bigpay.app.domain.Road;
 import com.bigpay.app.domain.RoadMap;
 import com.bigpay.app.domain.Station;
 import com.bigpay.app.domain.input.*;
-import com.bigpay.app.helper.SimpleInputDataMap;
+import com.bigpay.app.helper.InputDataMapHelper;
 import com.bigpay.app.service.RoadMapService;
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class FloydWarshallSearchComponentTest {
 
     @Test
     public void generateShortestPathTest() {
-        InputDataMap inputDataMap = SimpleInputDataMap.getSimpleDataMap();
+        InputDataMap inputDataMap = InputDataMapHelper.getSimpleDataMap();
 
         RoadMap roadMap = RoadMapService.generate(inputDataMap);
 

@@ -4,13 +4,13 @@ package com.bigpay.app.domain.input;
  * Represent Node from the input
  */
 public class StationInputData {
-    private char name;
+    private String name;
 
-    public StationInputData(char name) {
+    public StationInputData(String name) {
         this.name = name;
     }
 
-    public char getName() {
+    public String getName() {
         return name;
     }
 }
