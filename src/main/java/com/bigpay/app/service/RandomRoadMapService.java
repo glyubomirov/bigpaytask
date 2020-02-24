@@ -10,13 +10,13 @@ import java.util.*;
  */
 public class RandomRoadMapService {
 
-    public static RoadMap generator(int stationCount, int roadCount, int letterCount, int trainCount, int seed) {
+    public static RoadMap generate(int stationCount, int roadCount, int letterCount, int trainCount, int seed) {
 
         Random rand = new Random(seed);
 
-        Station[] stationList = new Station[stationCount];
+        Station[] stations = new Station[stationCount];
         for (int i = 0; i < stationCount; i++) {
-            stationList[i] = new Station(String.valueOf((char)(i + 65)), i);
+            stations[i] = new Station(String.valueOf((char)(i + 65)), i);
         }
 
         // create fully connected graph with random weights
@@ -24,8 +24,8 @@ public class RandomRoadMapService {
         Set<Road> roadSet = new HashSet<>();
         for (int i = 0; i < stationCount; i++) {
             for (int j = i + 1; j < stationCount; j++) {
-                int nextInt = rand.nextInt(300) + 1;
-                Road road = new Road(nextInt, stationList[i], stationList[j]);
+                int nextInt = rand.nextInt(10) + 1;
+                Road road = new Road(nextInt, stations[i], stations[j]);
                 stationMatrix[i * stationCount + j] = road;
                 stationMatrix[i + j * stationCount] = road;
                 roadSet.add(road);
@@ -36,19 +36,38 @@ public class RandomRoadMapService {
             roadSet.remove(stationMatrix[rand.nextInt(stationCount * stationCount)]);
         }
 
-        Letter[] letterList = new Letter[letterCount];
+        Station[] shuffledStationsOrder = stations.clone();
+
+        Letter[] letters = new Letter[letterCount];
         for (int i = 0; i < letterCount; i++) {
-            shuffleStationList(stationList, rand);
-            letterList[i] = new Letter(String.format("D%d", i + 1), stationList[0], stationList[1], rand.nextInt(20));
+            shuffleStationList(shuffledStationsOrder, rand);
+            letters[i] = new Letter(String.format("D%d", i + 1), shuffledStationsOrder[0], shuffledStationsOrder[1], rand.nextInt(20));
         }
 
-        Train[] trainList = new Train[trainCount];
+        Train[] trains = new Train[trainCount];
         for (int i = 0; i < trainCount; i++) {
-            shuffleStationList(stationList, rand);
-            trainList[i] = new Train(String.format("T%d", i + 1), stationList[0], rand.nextInt(80) + 20);
+            shuffleStationList(shuffledStationsOrder, rand);
+            trains[i] = new Train(String.format("T%d", i + 1), shuffledStationsOrder[0], rand.nextInt(80) + 20);
         }
 
-        return new RoadMap(stationList, roadSet.toArray(Road[]::new), letterList, trainList);
+        // Bind roads to each Station
+        roadSet.forEach(road -> {
+            road.getStations().forEach(station -> {
+                station.addRoad(road);
+            });
+        });
+
+        // Bind letters to each Station
+        Arrays.stream(letters).forEach(letter -> {
+            letter.getInitialDest().loadLetters(Set.of(letter));
+        });
+
+        // Bind Trains to each Station
+        Arrays.stream(trains).forEach(train -> {
+            train.getStation().addTrains(Set.of(train));
+        });
+
+        return new RoadMap(stations, roadSet.toArray(Road[]::new), letters, trains);
     }
 
     static void shuffleStationList(Station[] stations, Random rand)

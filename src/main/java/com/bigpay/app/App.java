@@ -22,7 +22,7 @@ public class App
         RoadMap roadMap = RoadMapService.generate(inputDataMap);
 
         // 3. Calculate shortest path between each two stations
-        Road[][][] shorestRoadMap = FloydWarshallSearchComponent.generateShortestPath(roadMap);
+        Road[][][] roads = FloydWarshallSearchComponent.getInstance().generateShortestPath(roadMap);
 
         // 4. Perform Search solution for the task
 

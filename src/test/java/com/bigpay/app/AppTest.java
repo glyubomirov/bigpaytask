@@ -15,7 +15,7 @@ public class AppTest
     @Test
     public void shouldAnswerWithTrue()
     {
-        RoadMap randomRoadMap = RandomRoadMapService.generator(10, 25, 100, 5, 1);
+        RoadMap randomRoadMap = RandomRoadMapService.generate(10, 25, 100, 5, 1);
 
         System.out.println(randomRoadMap);
     }

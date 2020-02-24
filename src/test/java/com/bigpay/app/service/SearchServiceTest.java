@@ -7,6 +7,7 @@ import com.bigpay.app.domain.input.InputDataMap;
 import com.bigpay.app.helper.InputDataMapHelper;
 import org.junit.Test;
 
+
 public class SearchServiceTest {
 
     @Test
@@ -15,9 +16,12 @@ public class SearchServiceTest {
         InputDataMap inputDataMap = InputDataMapHelper.getExtendedDataMap();
 
         RoadMap roadMap = RoadMapService.generate(inputDataMap);
+//        RoadMap roadMap = RandomRoadMapService.generate(30, 100, 100, 50, 1);
 
-        Road[][][] shortestRoadMap = FloydWarshallSearchComponent.generateShortestPath(roadMap);
+        Road[][][] shortestRoadMap = FloydWarshallSearchComponent.getInstance().generateShortestPath(roadMap);
 
-        SearchService.getInstance().search(roadMap, shortestRoadMap);
+        SearchService2.getInstance().search(roadMap, shortestRoadMap);
+
+
     }
 }

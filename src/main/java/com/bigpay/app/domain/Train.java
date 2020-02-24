@@ -1,7 +1,7 @@
 package com.bigpay.app.domain;
 
 import com.bigpay.app.component.ActionTrackerComponent;
-import com.bigpay.app.domain.action.*;
+import com.bigpay.app.domain.action.track.TrackActionType;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -79,7 +79,7 @@ public class Train {
         } else { // else train is not the station
             this.timeOnRoad++; // train continue moving on the road
 
-            this.actionTrackerComponent.track(ActionType.MOVE, null, road, this, null);
+            this.actionTrackerComponent.track(TrackActionType.MOVE, null, road, this, null);
 
             this.arrive();
         }
@@ -107,7 +107,7 @@ public class Train {
         this.nextStation = this.road.getCounterStation(this.station);
         this.station.unloadLetters(letters);
         this.loadLetters(letters);
-        this.actionTrackerComponent.track(ActionType.DEPART, this.station, road, this, null);
+        this.actionTrackerComponent.track(TrackActionType.DEPART, this.station, road, this, null);
         this.station = null;
         this.timeOnRoad = 0;
 
@@ -129,7 +129,7 @@ public class Train {
             this.road = null;
             this.timeOnRoad = 0;
             this.station.loadLetters(this.letters);
-            this.actionTrackerComponent.track(ActionType.ARRIVE, this.station, null, this, null);
+            this.actionTrackerComponent.track(TrackActionType.ARRIVE, this.station, null, this, null);
             this.unloadLetters();
             return true;
         }
@@ -148,13 +148,13 @@ public class Train {
 
         this.letters.addAll(letters);
         this.size = this.calculateLoadSize(this.letters);
-        this.actionTrackerComponent.track(ActionType.LOAD, this.station, null, this, this.letters);
+        this.actionTrackerComponent.track(TrackActionType.LOAD, this.station, null, this, this.letters);
 
         return true;
     }
 
     private void unloadLetters() {
-        this.actionTrackerComponent.track(ActionType.UNLOAD, this.station, null, this, this.letters);
+        this.actionTrackerComponent.track(TrackActionType.UNLOAD, this.station, null, this, this.letters);
         this.station.loadLetters(this.letters);
         this.letters.clear();
         this.size = 0;
@@ -196,5 +196,9 @@ public class Train {
 
     public int getTimeOnRoad() {
         return this.timeOnRoad;
+    }
+
+    public int getFreeCapacity() {
+        return this.capacity - this.letters.stream().mapToInt(Letter::getWeight).sum();
     }
 }

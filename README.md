@@ -33,15 +33,25 @@ java -jar ./target/BigPayTask.jar
 
 ## Terms
 
-* **Distance** - time steps e.g. 1 time step = 1 distance
+* **Distance** - distance that train does for 1 time step (e.g 1 distance per 1 time step)
 
-* **Letter Path** - Distance between source and target letter station
+* **Letter Path** - Distance between source and target Letter Station
 
-* **Total Letter Path** - sum of all Letter Paths for all Letters
+* **Total Letter Path** - Sum of all Letter Paths
 
-* **Train Path** - Distance between current and target train station
+* **Average Letter Path** - Total Letter Path divided by number of Letters
 
-* **Nearest Letter Path** - Distance between empty train and closest station with undelivered letters
+* **Train Path** - Distance between current and target train Station
+
+* **Total Letter Capacity** - Sum of all Letter Weights
+
+* **Total Train Capacity** - Sum of all capacity of all Trains
+
+* **Average Train Capacity** - Total Train Path divided by number of Trains
+
+* **Average Train Delivery Capacity** - Total Letter Capacity divided by Total Train Capacity
+
+* **Nearest Letter Path** - Distance between train and closest station with undelivered Letters
 
 * **Total Nearest Letter Path** - Distance between all empty trains and closest station with undelivered letters
 

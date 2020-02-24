@@ -1,5 +1,6 @@
 package com.bigpay.app.component;
 
+import com.bigpay.app.component.exception.NonExistingPathException;
 import com.bigpay.app.domain.Road;
 import com.bigpay.app.domain.RoadMap;
 import com.bigpay.app.domain.Station;
@@ -13,18 +14,29 @@ import java.util.stream.Collectors;
  */
 public class FloydWarshallSearchComponent {
 
+    private static FloydWarshallSearchComponent instance;
+    private Road[][][] shortestPathMatrix;
+    private int[][] cashedPathMatrix;
+
+    public static synchronized FloydWarshallSearchComponent getInstance() {
+        if (instance == null) {
+            instance = new FloydWarshallSearchComponent();
+        }
+
+        return instance;
+    }
+
     /**
      * Implementation of Floyd Warshall to find shortest path between each 2 Stations
      *
      * @param roadMap
      * @return
      */
-    public static Road[][][] generateShortestPath(RoadMap roadMap) {
-        int[] stationMatrix = roadMap.getStationMatrix();
+    public Road[][][] generateShortestPath(RoadMap roadMap) {
         int stationMatrixRawCount = roadMap.getStationMatrixRawCount();
 
         Station[] stations = roadMap.getStations();
-        Set<Road> roads = Set.of(roadMap.getRoads());
+        this.cashedPathMatrix = new int[stationMatrixRawCount][stationMatrixRawCount];
 
         // Initial matrix
         Road [][][]firstRoadMatrix = new Road[stationMatrixRawCount][stationMatrixRawCount][];
@@ -74,6 +86,7 @@ public class FloydWarshallSearchComponent {
             firstRoadMatrix = resultRoadMatrix;
         }
 
+        // Reverse path for value under first matrix diagonal
         for (int i = 0; i < stationMatrixRawCount; i++) {
             for (int j = i + 1; j < stationMatrixRawCount; j++) {
                 if (!resultRoadMatrix[i][j][0].getStations().contains(stations[i])) {
@@ -85,7 +98,32 @@ public class FloydWarshallSearchComponent {
             }
         }
 
+        // Checks is there is a path between every two Stations
+        for (int i = 0; i < stationMatrixRawCount; i++) {
+            for (int j = 0; j < stationMatrixRawCount; j++) {
+                if (resultRoadMatrix[i][j] == null) {
+                    throw new NonExistingPathException(String.format("There is no path between %s and %s",
+                            stations[i].getName(), stations[j].getName()));
+                } else {
+                    this.cashedPathMatrix[i][j] = roadTimeSteps(resultRoadMatrix[i][j]);
+                }
+            }
+        }
+
+        this.shortestPathMatrix = resultRoadMatrix;
+
         return resultRoadMatrix;
+    }
+
+    /**
+     * Calculates shortest distance between two stations
+     *
+     * @param sourceStation
+     * @param targetStation
+     * @return distance in time steps between two Stations
+     */
+    public int getDistance(Station sourceStation, Station targetStation) {
+        return this.cashedPathMatrix[sourceStation.getIndex()][targetStation.getIndex()];
     }
 
     /**

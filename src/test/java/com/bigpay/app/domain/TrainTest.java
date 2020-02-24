@@ -2,7 +2,7 @@ package com.bigpay.app.domain;
 
 import com.bigpay.app.component.ActionTrackerComponent;
 import com.bigpay.app.component.GameComponent;
-import com.bigpay.app.domain.action.TrackableAction;
+import com.bigpay.app.domain.action.track.TrackableAction;
 import com.bigpay.app.domain.input.InputDataMap;
 import com.bigpay.app.helper.InputDataMapHelper;
 import com.bigpay.app.service.RoadMapService;

@@ -97,10 +97,10 @@ public class InputDataMapHelper {
                         new LetterInputData("D10", "C", "E", 1)
                 },
                 new TrainInputData[]{
-                        new TrainInputData("T1", "S", 5),
+                        new TrainInputData("T1", "S", 12),
                         new TrainInputData("T2", "I", 6),
                         new TrainInputData("T3", "J", 8),
-                        new TrainInputData("T4", "L", 12)
+                        new TrainInputData("T4", "L", 5)
                 }
         );
     }

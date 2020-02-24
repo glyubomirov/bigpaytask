@@ -1,4 +1,4 @@
-package com.bigpay.app.domain.action;
+package com.bigpay.app.domain.action.track;
 
 import com.bigpay.app.domain.Letter;
 import com.bigpay.app.domain.Road;

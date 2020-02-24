@@ -64,18 +64,14 @@ public class RoadMap {
     private int[] generateStationMatrix(Station[] stationList, Road[] roadList) {
         int []roadMatrix = new int[stationList.length * stationList.length];
 
-        /**
-         * Generate Map(Station -> Station Index)
-         */
+        // Generate Map(Station -> Station Index)
         Map<String, Integer> stationMap = new HashMap<>();
 
         for (int i = 0; i < stationList.length; i++) {
             stationMap.put(stationList[i].getName(), i);
         }
 
-        /**
-         * Represents 2D matrix Station matrix as 1D array
-         */
+        // Represents 2D matrix Station matrix as 1D array
         Arrays.stream(roadList).forEach(road ->{
             Station[] stations = road.getStations().toArray(Station[]::new);
             int i = stationMap.get(stations[0].getName()); // get i coordinate of the matrix

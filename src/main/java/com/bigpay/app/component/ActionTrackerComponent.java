@@ -4,7 +4,7 @@ import com.bigpay.app.domain.Letter;
 import com.bigpay.app.domain.Road;
 import com.bigpay.app.domain.Station;
 import com.bigpay.app.domain.Train;
-import com.bigpay.app.domain.action.*;
+import com.bigpay.app.domain.action.track.*;
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -27,18 +27,18 @@ public class ActionTrackerComponent {
         return instance;
     }
 
-    public void track(ActionType actionType, Station station, Road road, Train train, Set<Letter> letters) {
+    public void track(TrackActionType trackActionType, Station station, Road road, Train train, Set<Letter> letters) {
         TrackableAction action;
 
-        if (actionType == ActionType.ARRIVE) {
+        if (trackActionType == TrackActionType.ARRIVE) {
             action = new TrainArriveActionTrack(station, road, train, letters);
-        } else if (actionType == ActionType.DEPART) {
+        } else if (trackActionType == TrackActionType.DEPART) {
             action = new TrainDepartActionTrack(station, road, train, letters);
-        } else if (actionType == ActionType.MOVE) {
+        } else if (trackActionType == TrackActionType.MOVE) {
             action = new TrainMoveActionTrack(station, road, train, letters);
-        } else if (actionType == ActionType.LOAD) {
+        } else if (trackActionType == TrackActionType.LOAD) {
             action = new TrainLoadActionTrack(station, road, train, letters);
-        } else if (actionType == ActionType.UNLOAD) {
+        } else if (trackActionType == TrackActionType.UNLOAD) {
             action = new TrainUnloadActionTrack(station, road, train, letters);
         } else {
             throw new UnsupportedOperationException("Not supported action type");
