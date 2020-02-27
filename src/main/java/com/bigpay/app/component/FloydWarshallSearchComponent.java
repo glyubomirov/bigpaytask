@@ -15,7 +15,6 @@ import java.util.stream.Collectors;
 public class FloydWarshallSearchComponent {
 
     private static FloydWarshallSearchComponent instance;
-    private Road[][][] shortestPathMatrix;
     private int[][] cashedPathMatrix;
 
     public static synchronized FloydWarshallSearchComponent getInstance() {
@@ -98,32 +97,7 @@ public class FloydWarshallSearchComponent {
             }
         }
 
-        // Checks is there is a path between every two Stations
-        for (int i = 0; i < stationMatrixRawCount; i++) {
-            for (int j = 0; j < stationMatrixRawCount; j++) {
-                if (resultRoadMatrix[i][j] == null) {
-                    throw new NonExistingPathException(String.format("There is no path between %s and %s",
-                            stations[i].getName(), stations[j].getName()));
-                } else {
-                    this.cashedPathMatrix[i][j] = roadTimeSteps(resultRoadMatrix[i][j]);
-                }
-            }
-        }
-
-        this.shortestPathMatrix = resultRoadMatrix;
-
         return resultRoadMatrix;
-    }
-
-    /**
-     * Calculates shortest distance between two stations
-     *
-     * @param sourceStation
-     * @param targetStation
-     * @return distance in time steps between two Stations
-     */
-    public int getDistance(Station sourceStation, Station targetStation) {
-        return this.cashedPathMatrix[sourceStation.getIndex()][targetStation.getIndex()];
     }
 
     /**

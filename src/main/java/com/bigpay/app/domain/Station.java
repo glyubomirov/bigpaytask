@@ -83,7 +83,7 @@ public class Station {
             return;
         }
 
-        this.letters.forEach(letter -> letter.unload(this));
+        letters.forEach(letter -> letter.unload(this));
         this.letters.addAll(letters);
     }
 
@@ -92,7 +92,7 @@ public class Station {
             return;
         }
 
-        this.letters.forEach(letter -> letter.load(train));
+        this.letters.forEach(Letter::load);
         this.letters.removeAll(letters);
     }
 
@@ -105,7 +105,7 @@ public class Station {
             return;
         }
 
-        letter.load(train);
+        letter.load();
         this.letters.remove(letter);
     }
 }

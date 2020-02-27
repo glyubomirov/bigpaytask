@@ -33,14 +33,16 @@ public class RoadMapService {
                 .collect(Collectors.toMap(Station::getName, Function.identity()));
 
         // Generates Road relation object from Road input data
-        Road[] roads = Arrays.stream(inputDataMap.getRoadList()).map(road -> new Road(
+        Road[] roads = Arrays.stream(inputDataMap.getRoadList())
+                .map(road -> new Road(
                 road.getTime(),
                 stationMap.get(road.getSourceStation()),
                 stationMap.get(road.getTargetStation()))).
                 toArray(Road[]::new);
 
         // Generates Road relation object from Road input data
-        Letter[] letters = Arrays.stream(inputDataMap.getLetterList()).map(letter -> new Letter(
+        Letter[] letters = Arrays.stream(inputDataMap.getLetterList())
+                .map(letter -> new Letter(
                 letter.getName(),
                 stationMap.get(letter.getSourceStation()),
                 stationMap.get(letter.getTargetStation()),
@@ -48,7 +50,8 @@ public class RoadMapService {
                 toArray(Letter[]::new);
 
         // Generates Road relation object from Road input data
-        Train[] trains = Arrays.stream(inputDataMap.getTrainList()).map(train -> new Train(
+        Train[] trains = Arrays.stream(inputDataMap.getTrainList())
+                .map(train -> new Train(
                 train.getName(),
                 stationMap.get(train.getStation()),
                 train.getCapacity())).

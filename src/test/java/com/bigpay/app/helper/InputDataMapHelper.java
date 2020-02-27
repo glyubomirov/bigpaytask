@@ -40,9 +40,7 @@ public class InputDataMapHelper {
                         new RoadInputData("J", "L", 4)
                 },
                 new LetterInputData[]{
-                        new LetterInputData("D1", "S", "E", 5),
-                        new LetterInputData("D2", "S", "E", 2),
-                        new LetterInputData("D3", "S", "E", 6)
+                        new LetterInputData("D1", "S", "E", 5)
                 },
                 new TrainInputData[]{
                         new TrainInputData("T1", "S", 5)
@@ -89,14 +87,15 @@ public class InputDataMapHelper {
                 new LetterInputData[]{
                         new LetterInputData("D1", "S", "E", 5),
                         new LetterInputData("D2", "S", "K", 2),
-                        new LetterInputData("D3", "A", "G", 4),
-                        new LetterInputData("D4", "A", "J", 1),
-                        new LetterInputData("D5", "B", "L", 2),
-                        new LetterInputData("D6", "D", "I", 3),
-                        new LetterInputData("D7", "H", "I", 5),
-                        new LetterInputData("D8", "F", "C", 1),
-                        new LetterInputData("D9", "F", "C", 2),
-                        new LetterInputData("D10", "C", "E", 1)
+                        new LetterInputData("D3", "S", "F", 6),
+                        new LetterInputData("D4", "A", "G", 4),
+                        new LetterInputData("D5", "A", "J", 1),
+                        new LetterInputData("D6", "B", "L", 2),
+                        new LetterInputData("D7", "D", "I", 3),
+                        new LetterInputData("D8", "H", "I", 5),
+                        new LetterInputData("D9", "F", "C", 1),
+                        new LetterInputData("D10", "F", "C", 2),
+                        new LetterInputData("D11", "C", "E", 1)
                 },
                 new TrainInputData[]{
                         new TrainInputData("T1", "S", 12),

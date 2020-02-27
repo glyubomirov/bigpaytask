@@ -1,7 +1,6 @@
 package com.bigpay.app.domain;
 
 import com.bigpay.app.component.ActionTrackerComponent;
-import com.bigpay.app.domain.action.TrainActionType;
 import com.bigpay.app.domain.action.track.TrackActionType;
 
 import java.util.HashSet;
@@ -112,7 +111,6 @@ public class Train {
             this.nextStation = null;
             this.road = null;
             this.timeOnRoad = 0;
-            this.station.unload(this.letters);
             this.actionTrackerComponent.track(TrackActionType.ARRIVE, this.station, null, this, null);
         }
     }

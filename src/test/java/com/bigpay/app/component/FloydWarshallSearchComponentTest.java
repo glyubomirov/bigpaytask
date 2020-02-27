@@ -21,7 +21,7 @@ public class FloydWarshallSearchComponentTest {
 
         RoadMap roadMap = RoadMapService.generate(inputDataMap);
 
-        Road[][][] actualResult = FloydWarshallSearchComponent.getInstance().generateShortestPath(roadMap);
+        Road[][][] actualResult = roadMap.getShortestRoadMap();
 
 //        for (int i = 0; i < actualResult.length; i++) {
 //            for (int j = 0; j < actualResult[i].length; j++) {
