@@ -40,7 +40,9 @@ public class InputDataMapHelper {
                         new RoadInputData("J", "L", 4)
                 },
                 new LetterInputData[]{
-                        new LetterInputData("D1", "S", "E", 5)
+                        new LetterInputData("D1", "S", "E", 5),
+                        new LetterInputData("D2", "S", "E", 2),
+                        new LetterInputData("D3", "S", "E", 6)
                 },
                 new TrainInputData[]{
                         new TrainInputData("T1", "S", 5)

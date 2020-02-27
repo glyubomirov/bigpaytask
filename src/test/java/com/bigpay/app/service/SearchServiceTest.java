@@ -13,7 +13,7 @@ public class SearchServiceTest {
     @Test
     public void search(){
 
-        InputDataMap inputDataMap = InputDataMapHelper.getExtendedDataMap();
+        InputDataMap inputDataMap = InputDataMapHelper.getSimpleDataMap();
 
         RoadMap roadMap = RoadMapService.generate(inputDataMap);
 //        RoadMap roadMap = RandomRoadMapService.generate(30, 100, 100, 50, 1);

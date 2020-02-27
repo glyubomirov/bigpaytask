@@ -63,7 +63,7 @@ public class RoadMapService {
 
         // Bind letters to each Station
         Arrays.stream(letters).forEach(letter -> {
-            letter.getInitialDest().loadLetters(Set.of(letter));
+            letter.getInitialDest().unload(Set.of(letter));
         });
 
         // Bind Trains to each Station

@@ -1,7 +1,6 @@
 package com.bigpay.app.service;
 
 import com.bigpay.app.domain.*;
-import com.bigpay.app.domain.input.*;
 
 import java.util.*;
 
@@ -59,7 +58,7 @@ public class RandomRoadMapService {
 
         // Bind letters to each Station
         Arrays.stream(letters).forEach(letter -> {
-            letter.getInitialDest().loadLetters(Set.of(letter));
+            letter.getInitialDest().unload(Set.of(letter));
         });
 
         // Bind Trains to each Station
