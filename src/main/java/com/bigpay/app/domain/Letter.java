@@ -11,20 +11,20 @@ public class Letter {
     private String name;
     private Station initialDest;
     private Station finalDest;
+    private Station currentDest;
     private int weight;
 
     private boolean isArrived;
-    private List<Station> destinationList;
-    private int distanceToDest;
+    private boolean isInProcessing;
 
     public Letter(String name, Station initialDest, Station finalDest, int weight) {
         this.name = name;
         this.initialDest = initialDest;
+        this.currentDest = initialDest;
         this.finalDest = finalDest;
         this.weight = weight;
-        this.destinationList = new ArrayList<>(2);
-        this.destinationList.add(initialDest);
-        this.distanceToDest = -1;
+        this.isArrived = false;
+        this.isInProcessing = false;
     }
 
     public String getName() {
@@ -35,6 +35,10 @@ public class Letter {
         return initialDest;
     }
 
+    public Station getCurrentDest() {
+        return currentDest;
+    }
+
     public Station getFinalDest() {
         return finalDest;
     }
@@ -43,27 +47,26 @@ public class Letter {
         return weight;
     }
 
-    public void addDest(Station station) {
-        this.destinationList.add(station);
-
-        if (station == this.finalDest) {
-            this.isArrived = true;
-        }
-    }
-
-    public Station removeDest() {
-        if (this.destinationList.size() > 1) { // initial station can not be removed
-            return this.destinationList.remove(this.destinationList.size() - 1);
-        }
-
-        return null;
-    }
-
     public boolean isArrived() {
         return isArrived;
     }
 
-    public List<Station> getDestList() {
-        return Collections.unmodifiableList(this.destinationList);
+    public boolean isInProcessing() {
+        return isInProcessing;
+    }
+
+    public void load() {
+        if (!this.isArrived) {
+            this.isInProcessing = true;
+        }
+    }
+
+    public void unload(Station station) {
+        this.currentDest = station;
+        this.isInProcessing = false;
+
+        if (station == this.finalDest) {
+            this.isArrived = true;
+        }
     }
 }

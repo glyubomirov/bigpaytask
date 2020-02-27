@@ -25,7 +25,7 @@ public class Station {
     private Set<Road> roads;
 
     /**
-     * All trains on this road
+     * All trains on this station
      */
     private Set<Train> trains;
 
@@ -78,18 +78,34 @@ public class Station {
         this.trains.removeAll(trains);
     }
 
-    public void loadLetters(Set<Letter> letters) {
-        for (Letter letter: letters) {
-            letter.addDest(this);
-        }
-        this.letters.addAll(letters);
-    }
-
-    public void unloadLetters(Set<Letter> letters) {
+    public void unload(Set<Letter> letters) {
         if (letters == null) {
             return;
         }
 
+        letters.forEach(letter -> letter.unload(this));
+        this.letters.addAll(letters);
+    }
+
+    public void load(Set<Letter> letters, Train train) {
+        if (letters == null) {
+            return;
+        }
+
+        this.letters.forEach(Letter::load);
         this.letters.removeAll(letters);
+    }
+
+    public void load(Letter letter, Train train) {
+        if (letter == null) {
+            return;
+        }
+
+        if (train == null) {
+            return;
+        }
+
+        letter.load();
+        this.letters.remove(letter);
     }
 }
