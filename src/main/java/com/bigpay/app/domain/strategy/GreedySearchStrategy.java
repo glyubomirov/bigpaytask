@@ -1,6 +1,7 @@
 package com.bigpay.app.domain.strategy;
 
 import com.bigpay.app.domain.Letter;
+import com.bigpay.app.domain.Road;
 import com.bigpay.app.domain.RoadMap;
 import com.bigpay.app.domain.Train;
 import com.bigpay.app.domain.action.*;
@@ -15,6 +16,7 @@ public class GreedySearchStrategy extends AbstractSearchStrategy {
 
     private RoadMap roadMap;
     private Set<Letter> letters;
+    private int timeStepNumber = 0;
 
     @Override
     public TimeStep getNextTimeStep(RoadMap roadMap) {
@@ -24,7 +26,7 @@ public class GreedySearchStrategy extends AbstractSearchStrategy {
                 .filter(letter -> !letter.isInProcessing() && !letter.isArrived())
                 .collect(Collectors.toSet());
 
-        TimeStep timeStep = new TimeStep(Set.of(this.roadMap.getTrains()));
+        TimeStep timeStep = new TimeStep(timeStepNumber++, Set.of(this.roadMap.getTrains()));
 
         boolean hasNextAction = true;
         while (hasNextAction) {
@@ -55,25 +57,18 @@ public class GreedySearchStrategy extends AbstractSearchStrategy {
 
                 } else if (lastAction.getActionType() == TrainActionType.UNLOAD) {
 
-                    TrainActionable action = getNextAction(train, timeStep);
-
-                    if (action != null) {
-                        if (action.getActionType() == TrainActionType.MOVE) {
-                            if (timeStep.hasTrainFreeTime(train)) {
-                                trainActions.add(new TrainAction(this.roadMap, train, action));
-                            }
-                        } else {
-                            trainActions.add(new TrainAction(this.roadMap, train, action));
-                        }
-                    }
 
                 } else if (lastAction.getActionType() == TrainActionType.ARRIVE) {
 
-                    trainActions.add(new TrainAction(this.roadMap, train, new TrainUnloadActionType(train)));
+                    trainActions.add(new TrainAction(this.roadMap, train,
+                            new TrainUnloadActionType(train, ((TrainArriveActionType)lastAction).getStation())));
 
                 } else if (lastAction.getActionType() == TrainActionType.DEPART) {
 
-                    trainActions.add(new TrainAction(this.roadMap, train, new TrainMoveActionType(train)));
+                    trainActions.add(new TrainAction(this.roadMap, train,
+                            new TrainMoveActionType(train,
+                                    ((TrainDepartActionType)lastAction).getFromStation(),
+                                    ((TrainDepartActionType)lastAction).getToStation())));
 
                 } else if (lastAction.getActionType() == TrainActionType.MOVE) {
 
@@ -85,11 +80,15 @@ public class GreedySearchStrategy extends AbstractSearchStrategy {
 
                     if (departActionTypes.size() > 0) {
                         if (departActionTypes.get(0).getRoad().getTime() == 1) {
-                            trainActions.add(new TrainAction(this.roadMap, train, new TrainArriveActionType(train)));
+                            trainActions.add(new TrainAction(this.roadMap, train,
+                                    new TrainArriveActionType(train,
+                                            ((TrainMoveActionType)lastAction).getToStation())));
                         }
                     } else if (train.getRoad() != null) {
                         if (train.getRoad().getTime() <= train.getTimeOnRoad() + 1) {
-                            trainActions.add(new TrainAction(this.roadMap, train, new TrainArriveActionType(train)));
+                            trainActions.add(new TrainAction(this.roadMap, train,
+                                    new TrainArriveActionType(train,
+                                            ((TrainMoveActionType)lastAction).getToStation())));
                         }
                     }
 
@@ -127,7 +126,7 @@ public class GreedySearchStrategy extends AbstractSearchStrategy {
     private TrainActionable getNextAction(Train train, TimeStep timeStep) {
 
         if ((train.getStation() == null) && (train.getRoad() != null)) {
-            return new TrainMoveActionType(train);
+            return new TrainMoveActionType(train, train.getRoad().getCounterStation(train.getNextStation()), train.getNextStation());
         }
 
         // 1. Find closest letter that can be collected
@@ -160,16 +159,18 @@ public class GreedySearchStrategy extends AbstractSearchStrategy {
         if (closestLetterDistance > deliverLetterDistance) {
 
             if (deliverLetterDistance == 0) {
-                return new TrainUnloadActionType(train);
+                return new TrainUnloadActionType(train, deliverLetter.getFinalDest());
             } else {
-                return new TrainDepartActionType(train, this.roadMap.getShortestRoadMap()[train.getStation().getIndex()][deliverLetter.getFinalDest().getIndex()][0]);
+                Road road = this.roadMap.getShortestRoadMap()[train.getStation().getIndex()][deliverLetter.getFinalDest().getIndex()][0];
+                return new TrainDepartActionType(train, road, train.getStation(), road.getCounterStation(train.getStation()));
             }
         } else {
             if (closestLetterDistance == 0) {
                 this.letters.remove(closestLetter);
-                return new TrainLoadActionType(train, closestLetter);
+                return new TrainLoadActionType(train, closestLetter, closestLetter.getCurrentDest());
             } else {
-                return new TrainDepartActionType(train, this.roadMap.getShortestRoadMap()[train.getStation().getIndex()][closestLetter.getCurrentDest().getIndex()][0]);
+                Road road = this.roadMap.getShortestRoadMap()[train.getStation().getIndex()][closestLetter.getCurrentDest().getIndex()][0];
+                return new TrainDepartActionType(train, road, train.getStation(), road.getCounterStation(train.getStation()));
             }
         }
     }

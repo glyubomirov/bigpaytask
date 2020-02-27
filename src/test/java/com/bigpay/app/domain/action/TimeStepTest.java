@@ -74,6 +74,7 @@ public class TimeStepTest {
 
         // Process Time Step
         timeStepComponent.process();
+        timeStep.print();
 
         // Train T1 assertions
         assertEquals(2, roadMap.getTrains()[0].getLetters().size());
@@ -127,10 +128,12 @@ public class TimeStepTest {
         assertFalse(roadMap.getLetters()[2].isInProcessing());
 
         //Add second time step and processes it
-        timeStepComponent.addTimeStep(strategy.getNextTimeStep(roadMap));
-        timeStepComponent.process();
-
-        System.out.println(roadMap);
+        while(!TimeStepComponent.isFinish(roadMap)) {
+            timeStep = strategy.getNextTimeStep(roadMap);
+            timeStepComponent.addTimeStep(timeStep);
+            timeStepComponent.process();
+            timeStep.print();
+        }
     }
 
     @Test
@@ -147,17 +150,69 @@ public class TimeStepTest {
         TimeStep timeStep = strategy.getNextTimeStep(roadMap);
         timeStepComponent.addTimeStep(timeStep);
         timeStepComponent.process();
+        timeStep.print();
 
         // Step 2
         timeStep = strategy.getNextTimeStep(roadMap);
         timeStepComponent.addTimeStep(timeStep);
         timeStepComponent.process();
+        timeStep.print();
 
         // Step 3
         timeStep = strategy.getNextTimeStep(roadMap);
         timeStepComponent.addTimeStep(timeStep);
         timeStepComponent.process();
+        timeStep.print();
 
-        System.out.println(roadMap);
+        // Step 4
+        timeStep = strategy.getNextTimeStep(roadMap);
+        timeStepComponent.addTimeStep(timeStep);
+        timeStepComponent.process();
+        timeStep.print();
+
+        // Step 5
+        timeStep = strategy.getNextTimeStep(roadMap);
+        timeStepComponent.addTimeStep(timeStep);
+        timeStepComponent.process();
+        timeStep.print();
+
+        // Step 6
+        timeStep = strategy.getNextTimeStep(roadMap);
+        timeStepComponent.addTimeStep(timeStep);
+        timeStepComponent.process();
+        timeStep.print();
+
+        // Step 7
+        timeStep = strategy.getNextTimeStep(roadMap);
+        timeStepComponent.addTimeStep(timeStep);
+        timeStepComponent.process();
+        timeStep.print();
+
+        assertTrue(TimeStepComponent.isFinish(roadMap));
+
+    }
+
+    @Test
+    public void validateSimpleStep2() {
+
+        InputDataMap inputDataMap = InputDataMapHelper.getSimpleDataMap2();
+
+        RoadMap roadMap = RoadMapService.generate(inputDataMap);
+
+        AbstractSearchStrategy strategy = SearchStrategyFactory.getInstance().getStrategy(StrategyType.GREEDY);
+        TimeStepComponent timeStepComponent = TimeStepComponent.getInstance();
+
+        // Step 1
+        TimeStep timeStep;
+
+        while(!TimeStepComponent.isFinish(roadMap)) {
+            timeStep = strategy.getNextTimeStep(roadMap);
+            timeStepComponent.addTimeStep(timeStep);
+            timeStepComponent.process();
+            timeStep.print();
+        }
+
+        assertTrue(TimeStepComponent.isFinish(roadMap));
+
     }
 }

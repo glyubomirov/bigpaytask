@@ -1,16 +1,21 @@
 package com.bigpay.app.domain.action;
 
 import com.bigpay.app.domain.Road;
+import com.bigpay.app.domain.Station;
 import com.bigpay.app.domain.Train;
 
 public class TrainDepartActionType implements TrainActionable {
 
     private Train train;
     private Road road;
+    private Station fromStation;
+    private Station toStation;
 
-    public TrainDepartActionType(Train train, Road road) {
+    public TrainDepartActionType(Train train, Road road, Station fromStation, Station toStation) {
         this.train = train;
         this.road = road;
+        this.fromStation = fromStation;
+        this.toStation = toStation;
     }
 
     @Override
@@ -35,5 +40,13 @@ public class TrainDepartActionType implements TrainActionable {
     @Override
     public int getExecutableTime() {
         return 0;
+    }
+
+    public Station getFromStation() {
+        return fromStation;
+    }
+
+    public Station getToStation() {
+        return toStation;
     }
 }

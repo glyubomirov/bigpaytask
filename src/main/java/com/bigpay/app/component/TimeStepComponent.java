@@ -1,9 +1,12 @@
 package com.bigpay.app.component;
 
-import com.bigpay.app.domain.action.TimeStep;
+import com.bigpay.app.domain.Letter;
+import com.bigpay.app.domain.RoadMap;
+import com.bigpay.app.domain.action.*;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -39,5 +42,9 @@ public class TimeStepComponent {
             timeStep.process();
             lastProcessedStep = i;
         }
+    }
+
+    public static boolean isFinish(RoadMap roadMap) {
+        return Arrays.stream(roadMap.getLetters()).allMatch(Letter::isArrived);
     }
 }
