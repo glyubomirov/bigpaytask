@@ -124,16 +124,6 @@ public class Train {
         this.size = 0;
     }
 
-    /**
-     *  Calculates weight of letters
-     *
-     * @param letters
-     * @return weight of letters
-     */
-    public static int calculateLoadSize(Set<Letter> letters) {
-        return letters.stream().mapToInt(Letter::getWeight).sum();
-    }
-
     public String getName() {
         return this.name;
     }

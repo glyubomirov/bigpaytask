@@ -36,7 +36,7 @@ public class GreedySearchStrategy extends AbstractSearchStrategy {
     private void prepareNextAction(TimeStep timeStep) {
 
         Set<Letter> letters = Arrays.stream(this.roadMap.getLetters())
-                .filter(letter -> !letter.isDelivered()).collect(Collectors.toSet());
+                .filter(letter -> !letter.isDelivered() && !letter.isInProcessing()).collect(Collectors.toSet());
 
         for (Train train : this.roadMap.getTrains()) {
             if (train.getRoad() != null) {
