@@ -1,5 +1,6 @@
 package com.bigpay.app.domain.strategy;
 
+import com.bigpay.app.component.exception.WrondRoadMapStateException;
 import com.bigpay.app.domain.Letter;
 import com.bigpay.app.domain.Road;
 import com.bigpay.app.domain.RoadMap;
@@ -16,7 +17,7 @@ public class GreedySearchStrategy extends AbstractSearchStrategy {
 
     private RoadMap roadMap;
     private Set<Letter> letters;
-    private int timeStepNumber = 0;
+    private int timeStepNumber = 1;
 
     @Override
     public TimeStep getNextTimeStep(RoadMap roadMap) {
@@ -28,14 +29,90 @@ public class GreedySearchStrategy extends AbstractSearchStrategy {
 
         TimeStep timeStep = new TimeStep(timeStepNumber++, Set.of(this.roadMap.getTrains()));
 
-        boolean hasNextAction = true;
-        while (hasNextAction) {
-            Set<TrainAction> trainActions = prepareNextAction(timeStep);
-            trainActions.forEach(timeStep::addAction);
-            hasNextAction = !trainActions.isEmpty();
-        }
+        prepareNextAction2(timeStep);
 
         return timeStep;
+    }
+
+    private void prepareNextAction2(TimeStep timeStep) {
+
+        Set<Letter> letters = Arrays.stream(this.roadMap.getLetters())
+                .filter(letter -> !letter.isArrived()).collect(Collectors.toSet());
+
+        for (Train train : this.roadMap.getTrains()) {
+            if (train.getRoad() != null) {
+
+                timeStep.addAction(new TrainAction(this.roadMap, train,
+                        new TrainMoveActionType(train, train.getRoad()
+                                .getCounterStation(train.getNextStation()), train.getNextStation())));
+
+                if (train.getRoad().getTime() <= train.getTimeOnRoad() + 1) {
+
+                    timeStep.addAction(new TrainAction(this.roadMap, train,
+                            new TrainArriveActionType(train, train.getNextStation())));
+
+                    timeStep.addAction(new TrainAction(this.roadMap, train,
+                            new TrainUnloadActionType(train, train.getNextStation())));
+                }
+
+            } else if (train.getStation() != null) {
+                Road road = null;
+                Set<Letter> removedLetters = new HashSet<>(letters.size());
+                for (Letter letter: letters) {
+                    if (letter.getCurrentDest() == train.getStation()) {
+                        if (timeStep.getTrainFreeSpace(train) >= letter.getWeight()) {
+                            if (timeStep.getTrainFreeSpace(train) == train.getCapacity()) {
+                                road = roadMap.getShortestRoadMap()[letter.getCurrentDest().getIndex()][letter.getFinalDest().getIndex()][0];
+                                timeStep.addAction(new TrainAction(this.roadMap, train,
+                                        new TrainLoadActionType(train, letter, letter.getCurrentDest())));
+                                removedLetters.add(letter);
+                            } else {
+                                if (road == roadMap.getShortestRoadMap()[letter.getCurrentDest().getIndex()][letter.getFinalDest().getIndex()][0]) {
+                                    timeStep.addAction(new TrainAction(this.roadMap, train,
+                                            new TrainLoadActionType(train, letter, letter.getCurrentDest())));
+                                    removedLetters.add(letter);
+                                }
+                            }
+                        }
+                    }
+                }
+
+                letters.removeAll(removedLetters);
+
+                if (road == null) {
+                    Letter closestLetter = findClosestLetter(train, this.letters.stream()
+                            .filter(letter -> letter.getWeight() <= train.getCapacity())
+                            .filter(letter -> !letter.isArrived() && !letter.isInProcessing())
+                            .collect(Collectors.toSet()));
+
+                    if (closestLetter != null) {
+                        road = this.roadMap.getShortestRoadMap()[train.getStation().getIndex()][closestLetter.getCurrentDest().getIndex()][0];
+                    }
+                }
+
+                if (road != null) {
+                    timeStep.addAction(new TrainAction(this.roadMap, train,
+                            new TrainDepartActionType(train,
+                                    road, train.getStation(), road.getCounterStation(train.getStation()))));
+
+                    timeStep.addAction(new TrainAction(this.roadMap, train,
+                            new TrainMoveActionType(train,
+                                    train.getStation(), road.getCounterStation(train.getStation()))));
+
+                    if (road.getTime() == 1) {
+
+                        timeStep.addAction(new TrainAction(this.roadMap, train,
+                                new TrainArriveActionType(train, road.getCounterStation(train.getStation()))));
+
+                        timeStep.addAction(new TrainAction(this.roadMap, train,
+                                new TrainUnloadActionType(train, road.getCounterStation(train.getStation()))));
+                    }
+                }
+
+            } else {
+                throw new WrondRoadMapStateException(String.format("Unknown train %s position", train.getName()));
+            }
+        }
     }
 
     private Set<TrainAction> prepareNextAction(TimeStep timeStep) {
@@ -92,18 +169,6 @@ public class GreedySearchStrategy extends AbstractSearchStrategy {
                         }
                     }
 
-                } else {
-                    TrainActionable action = getNextAction(train, timeStep);
-
-                    if (action != null) {
-                        if (action.getActionType() == TrainActionType.MOVE) {
-                            if (timeStep.hasTrainFreeTime(train)) {
-                                trainActions.add(new TrainAction(this.roadMap, train, action));
-                            }
-                        } else {
-                            trainActions.add(new TrainAction(this.roadMap, train, action));
-                        }
-                    }
                 }
             } else {
                 TrainActionable action = getNextAction(train, timeStep);
@@ -154,6 +219,7 @@ public class GreedySearchStrategy extends AbstractSearchStrategy {
         if (closestLetterDistance == Integer.MAX_VALUE && deliverLetterDistance == Integer.MAX_VALUE){
             return null;
         }
+
 
         // 5. Chooses closest distance
         if (closestLetterDistance > deliverLetterDistance) {
@@ -233,5 +299,9 @@ public class GreedySearchStrategy extends AbstractSearchStrategy {
         }
 
         return minPathLetter;
+    }
+
+    private Road getLetterFavoriteDirection(Letter letter) {
+        return this.roadMap.getShortestRoadMap()[letter.getCurrentDest().getIndex()][letter.getFinalDest().getIndex()][0];
     }
 }

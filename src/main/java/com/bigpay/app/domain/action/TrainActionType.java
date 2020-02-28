@@ -5,6 +5,5 @@ public enum TrainActionType {
     UNLOAD,
     ARRIVE,
     DEPART,
-    MOVE,
-    NONE
+    MOVE
 }

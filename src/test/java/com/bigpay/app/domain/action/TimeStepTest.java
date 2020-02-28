@@ -195,7 +195,7 @@ public class TimeStepTest {
     @Test
     public void validateSimpleStep2() {
 
-        InputDataMap inputDataMap = InputDataMapHelper.getSimpleDataMap2();
+        InputDataMap inputDataMap = InputDataMapHelper.getExtendedDataMap();
 
         RoadMap roadMap = RoadMapService.generate(inputDataMap);
 

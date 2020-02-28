@@ -1,16 +1,6 @@
 package com.bigpay.app.domain;
 
-import com.bigpay.app.component.ActionTrackerComponent;
-import com.bigpay.app.component.GameComponent;
-import com.bigpay.app.domain.action.track.TrackableAction;
-import com.bigpay.app.domain.input.InputDataMap;
-import com.bigpay.app.helper.InputDataMapHelper;
-import com.bigpay.app.service.RoadMapService;
 import org.junit.Test;
-
-import java.util.Set;
-
-import static org.junit.Assert.*;
 
 public class TrainTest {
 
