@@ -1,6 +1,6 @@
-package com.bigpay.app.constants;
+package com.bigpay.app.domain.input;
 
-public class Constants {
+public class InputConstants {
 
     // Input data validation Constants
     public static final String ROAD_INPUT_DATA_DELIMITER = ",";

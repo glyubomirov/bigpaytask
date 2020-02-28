@@ -6,19 +6,11 @@ import com.bigpay.app.component.exception.NonExistingPathException;
 import java.util.*;
 
 /**
- * Represents geographical map of train stations (nodes) and railways(edges)
+ * Represents geographical map of train Stations(Nodes), Roads(Edges), Letters and Trains
+ *
+ * @author ggeorgiev
  */
 public class RoadMap {
-    /**
-     * StationMatrix is 2D matrix representation of nodes and edges. Because app will need to work very often with 2D
-     * matrix it will be represented as single N*N array
-     */
-    private int[] stationMatrix;
-
-    /**
-     * Number of rows in stationMatrix
-     */
-    private int stationMatrixRawCount;
 
     /**
      * List of all stations
@@ -41,22 +33,22 @@ public class RoadMap {
     private Train[] trainList;
 
     /**
-     *
+     * Matrix wth list of roads that connects each two stations
      */
     private Road[][][] shortestRoadMap;
 
     /**
-     *
+     * Matrix wth minimal distance between two stations
      */
     private int[][] cashedPathMatrix;
 
     /**
-     * Constructor sets default values
+     * Constructor that generates road map of all stations, roads, letters and trains
      *
-     * @param stationList
-     * @param roadList
-     * @param letterList
-     * @param trainList
+     * @param stationList station list from input
+     * @param roadList roads list from input
+     * @param letterList letter list from input
+     * @param trainList train list from input
      */
     public RoadMap(Station[] stationList, Road[] roadList, Letter[] letterList, Train[] trainList) {
         this.stationList = stationList.clone();
@@ -64,20 +56,22 @@ public class RoadMap {
         this.letterList = letterList.clone();
         this.trainList = trainList.clone();
 
-        this.stationMatrixRawCount = stationList.length;
-        this.stationMatrix = this.generateStationMatrix(stationList, roadList);
-
         this.shortestRoadMap = FloydWarshallSearchComponent.getInstance().generateShortestPath(this);
 
-        this.cashedPathMatrix = new int[stationMatrixRawCount][stationMatrixRawCount];
+        this.cashedPathMatrix = new int[stationList.length][stationList.length];
 
         this.calculatePathMatrix();
     }
 
+    /**
+     * Calculates and caches minimal Path length between each two stations.
+     */
     private void calculatePathMatrix() {
         // Checks is there is a path between every two Stations
-        for (int i = 0; i < stationMatrixRawCount; i++) {
-            for (int j = 0; j < stationMatrixRawCount; j++) {
+        for (int i = 0; i < stationList.length; i++) {
+            for (int j = 0; j < stationList.length; j++) {
+
+                // Checks if there is missing Path between two stations
                 if (shortestRoadMap[i][j] == null) {
                     throw new NonExistingPathException(String.format("There is no path between %s and %s",
                             this.stationList[i].getName(), this.stationList[j].getName()));
@@ -92,80 +86,58 @@ public class RoadMap {
      * Calculate total time steps for list of roads
      *
      * @param roads list of roads
-     * @return total time
+     * @return total time steps
      */
     private static int roadTimeSteps(Road[] roads) {
         if (roads == null) {
             return Integer.MAX_VALUE;
         }
-        return Arrays.stream(roads).map(Road::getTime).mapToInt(Integer::valueOf).sum();
+        return Arrays.stream(roads).map(Road::getTimeSteps).mapToInt(Integer::valueOf).sum();
     }
 
     /**
+     * Calculates shortest distance between two stations in time steps
      *
-     * Generates station matrix as 1D array for fast element access
-     *
-     * @return
-     */
-    private int[] generateStationMatrix(Station[] stationList, Road[] roadList) {
-        int []roadMatrix = new int[stationList.length * stationList.length];
-
-        // Generate Map(Station -> Station Index)
-        Map<String, Integer> stationMap = new HashMap<>();
-
-        for (int i = 0; i < stationList.length; i++) {
-            stationMap.put(stationList[i].getName(), i);
-        }
-
-        // Represents 2D matrix Station matrix as 1D array
-        Arrays.stream(roadList).forEach(road ->{
-            Station[] stations = road.getStations().toArray(Station[]::new);
-            int i = stationMap.get(stations[0].getName()); // get i coordinate of the matrix
-            int j = stationMap.get(stations[1].getName()); // get j coordinate of the matrix
-            roadMatrix[i * stationList.length + j] = road.getTime();
-            roadMatrix[i + j * stationList.length] = road.getTime();
-        });
-
-        return roadMatrix;
-    }
-
-
-    /**
-     * Calculates shortest distance between two stations
-     *
-     * @param sourceStation
-     * @param targetStation
+     * @param sourceStation from station
+     * @param targetStation to station
      * @return distance in time steps between two Stations
      */
     public int getDistance(Station sourceStation, Station targetStation) {
         return this.cashedPathMatrix[sourceStation.getIndex()][targetStation.getIndex()];
     }
 
+    /**
+     * @return List of all stations
+     */
     public Station[] getStations() {
         return this.stationList.clone();
     }
 
+    /**
+     * @return List of all roads
+     */
     public Road[] getRoads() {
         return roadList.clone();
     }
 
+    /**
+     * @return List of all letters
+     */
     public Letter[] getLetters() {
         return letterList.clone();
     }
 
+    /**
+     * @return List of all trains
+     */
     public Train[] getTrains() {
         return trainList.clone();
     }
 
-    public int[] getStationMatrix() {
-        return stationMatrix.clone();
-    }
-
-    public int getStationMatrixRawCount() {
-        return stationMatrixRawCount;
-    }
-
+    /**
+     * @return Matrix wth list of roads that connects each two stations
+     */
     public Road[][][] getShortestRoadMap() {
-        return shortestRoadMap;
+        return shortestRoadMap.clone();
     }
 }

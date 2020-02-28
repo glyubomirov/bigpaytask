@@ -2,7 +2,6 @@ package com.bigpay.app.domain;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * Represent train in the task
@@ -66,7 +65,7 @@ public class Train {
             return;
         }
 
-        if (this.timeOnRoad < this.road.getTime()) {
+        if (this.timeOnRoad < this.road.getTimeSteps()) {
             this.timeOnRoad++;
         }
     }
@@ -94,7 +93,7 @@ public class Train {
      * @return true if arrival is successful
      */
     public void arrive() {
-        if (this.timeOnRoad >= this.road.getTime()) { // if train arrives at the next station
+        if (this.timeOnRoad >= this.road.getTimeSteps()) { // if train arrives at the next station
 
             this.station = this.nextStation;
             this.nextStation = null;
@@ -107,20 +106,8 @@ public class Train {
         return letter.getWeight() + this.size <= this.capacity;
     }
 
-    public void load(Set<Letter> letters) {
-        if (letters == null) {
-            return;
-        }
-
-        Set<Letter> unprocessedLetters = letters.stream()
-                .filter(letter -> !letter.isArrived() && !letter.isInProcessing())
-                .collect(Collectors.toSet());
-
-        unprocessedLetters.forEach(this::load);
-    }
-
     public void load(Letter letter) {
-        if (letter.isArrived() || letter.isInProcessing()) {
+        if (letter.isDelivered() || letter.isInProcessing()) {
             return;
         }
 

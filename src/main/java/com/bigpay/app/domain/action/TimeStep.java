@@ -94,7 +94,7 @@ public class TimeStep {
     }
 
     public void print() {
-        System.out.println(String.format("-------------------- Time Step %d --------------------", this.id));
+        System.out.println(String.format("-------------------------- Time Step %d --------------------------", this.id));
 
         this.getActionMap().entrySet().forEach(item -> {
             item.getValue().stream().forEach(action -> {

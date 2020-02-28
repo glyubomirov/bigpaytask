@@ -22,7 +22,7 @@ public class RoadInputData {
         return targetStation;
     }
 
-    public int getTime() {
+    public int getTimeSteps() {
         return time;
     }
 

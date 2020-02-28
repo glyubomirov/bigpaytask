@@ -1,15 +1,18 @@
 package com.bigpay.app.component;
 
-import com.bigpay.app.component.exception.NonExistingPathException;
 import com.bigpay.app.domain.Road;
 import com.bigpay.app.domain.RoadMap;
 import com.bigpay.app.domain.Station;
-import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 /**
+ * Implementation of Floyd-Warshall algorithm with one major modification. Result are two matrices:
+ * 1. First one: Element is number with  minimal distance between two Stations(Vertices).
+ * 2. Second one: Element is list of Roads(Edges) from Station(Vertex) to Station(Vertex)
+ *
+ * @author ggeorgiev
  *
  */
 public class FloydWarshallSearchComponent {
@@ -17,6 +20,17 @@ public class FloydWarshallSearchComponent {
     private static FloydWarshallSearchComponent instance;
     private int[][] cashedPathMatrix;
 
+    /**
+     * Private constructor
+     */
+    private FloydWarshallSearchComponent() {
+
+    }
+
+    /**
+     * Get the single instance of this component
+     * @return instance of this component
+     */
     public static synchronized FloydWarshallSearchComponent getInstance() {
         if (instance == null) {
             instance = new FloydWarshallSearchComponent();
@@ -32,15 +46,15 @@ public class FloydWarshallSearchComponent {
      * @return
      */
     public Road[][][] generateShortestPath(RoadMap roadMap) {
-        int stationMatrixRawCount = roadMap.getStationMatrixRawCount();
+        int stationCount = roadMap.getStations().length;
 
         Station[] stations = roadMap.getStations();
-        this.cashedPathMatrix = new int[stationMatrixRawCount][stationMatrixRawCount];
+        this.cashedPathMatrix = new int[stationCount][stationCount];
 
         // Initial matrix
-        Road [][][]firstRoadMatrix = new Road[stationMatrixRawCount][stationMatrixRawCount][];
-        for (int i = 0; i < stationMatrixRawCount; i++) {
-            for (int j = i; j < stationMatrixRawCount; j++) {
+        Road [][][]firstRoadMatrix = new Road[stationCount][stationCount][];
+        for (int i = 0; i < stationCount; i++) {
+            for (int j = i; j < stationCount; j++) {
                 if (i == j) {
                     firstRoadMatrix[i][j] = new Road[0];
                 } else {
@@ -58,12 +72,12 @@ public class FloydWarshallSearchComponent {
             }
         }
 
-        // find final solution
+        // Find final solution
         Road [][][]resultRoadMatrix = null;
-        for (int k = 0; k < stationMatrixRawCount; k++) {
-            resultRoadMatrix = new Road[stationMatrixRawCount][stationMatrixRawCount][];
-            for (int i = 0; i < stationMatrixRawCount; i++) {
-                for (int j = i; j < stationMatrixRawCount; j++) {
+        for (int k = 0; k < stationCount; k++) {
+            resultRoadMatrix = new Road[stationCount][stationCount][];
+            for (int i = 0; i < stationCount; i++) {
+                for (int j = i; j < stationCount; j++) {
                     if ((i == k) || (k == j)) {
                         resultRoadMatrix[i][j] = firstRoadMatrix[i][j];
                     } else if (i == j) {
@@ -78,7 +92,7 @@ public class FloydWarshallSearchComponent {
                     }
                     if (resultRoadMatrix[i][j] != null) {
                         resultRoadMatrix[j][i] = resultRoadMatrix[i][j].clone();
-                        ArrayUtils.reverse(resultRoadMatrix[i][j]);
+                        reverseRoad(resultRoadMatrix[i][j]);
                     }
                 }
             }
@@ -86,12 +100,12 @@ public class FloydWarshallSearchComponent {
         }
 
         // Reverse path for value under first matrix diagonal
-        for (int i = 0; i < stationMatrixRawCount; i++) {
-            for (int j = i + 1; j < stationMatrixRawCount; j++) {
+        for (int i = 0; i < stationCount; i++) {
+            for (int j = i + 1; j < stationCount; j++) {
                 if (!resultRoadMatrix[i][j][0].getStations().contains(stations[i])) {
                     if (!resultRoadMatrix[i][j][resultRoadMatrix[i][j].length - 1].getStations().contains(stations[j])) {
                         resultRoadMatrix[j][i] = resultRoadMatrix[i][j].clone();
-                        ArrayUtils.reverse(resultRoadMatrix[i][j]);
+                        reverseRoad(resultRoadMatrix[i][j]);
                     }
                 }
             }
@@ -110,15 +124,28 @@ public class FloydWarshallSearchComponent {
         if (roads == null) {
             return Integer.MAX_VALUE;
         }
-        return Arrays.stream(roads).map(Road::getTime).mapToInt(Integer::valueOf).sum();
+        return Arrays.stream(roads).map(Road::getTimeSteps).mapToInt(Integer::valueOf).sum();
     }
 
     /**
+     * Reverse road list
      *
+     * @param roads
+     */
+    private static void reverseRoad(Road[] roads) {
+        for (int i = 0; i < roads.length / 2; i++) {
+            Road tempRoad = roads[i];
+            roads[i] = roads[roads.length - i - 1];
+            roads[roads.length - i - 1] = tempRoad;
+        }
+    }
+
+    /**
+     * Smart merge of two Connected Road Lists. Result is Connected Road List.
      *
      * @param roadArray1
      * @param roadArray2
-     * @return
+     * @return Connected Road List
      */
     private static Road[] mergeRoadArrays(Road[] roadArray1, Road[] roadArray2) {
         if (roadArray1 == null || roadArray2 == null){
@@ -152,7 +179,7 @@ public class FloydWarshallSearchComponent {
         }
 
         //Reverse array
-        ArrayUtils.reverse(roadArray2);
+        reverseRoad(roadArray2);
 
         // check is beginning of second array has the same station as end of first array
         firstArrayStation = roadArray1[roadArray1.length - 1].getStations();

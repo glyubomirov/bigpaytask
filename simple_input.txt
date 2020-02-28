@@ -1,0 +1,44 @@
+// Stations
+13
+A
+B
+C
+D
+E
+F
+G
+H
+I
+J
+K
+L
+S
+
+// Roads
+18
+A,B,3
+A,D,4
+A,S,7
+B,D,4
+B,S,2
+B,H,1
+C,S,3
+C,L,2
+D,F,5
+E,G,2
+E,K,5
+F,H,3
+G,H,2
+I,J,6
+I,K,4
+I,L,4
+J,K,4
+J,L,4
+
+// Letters
+1
+D1,S,E,5
+
+// Trains
+1
+T1,S,12

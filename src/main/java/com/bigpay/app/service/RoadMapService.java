@@ -35,7 +35,7 @@ public class RoadMapService {
         // Generates Road relation object from Road input data
         Road[] roads = Arrays.stream(inputDataMap.getRoadList())
                 .map(road -> new Road(
-                road.getTime(),
+                road.getTimeSteps(),
                 stationMap.get(road.getSourceStation()),
                 stationMap.get(road.getTargetStation()))).
                 toArray(Road[]::new);
@@ -67,11 +67,6 @@ public class RoadMapService {
         // Bind letters to each Station
         Arrays.stream(letters).forEach(letter -> {
             letter.getInitialDest().unload(Set.of(letter));
-        });
-
-        // Bind Trains to each Station
-        Arrays.stream(trains).forEach(train -> {
-            train.getStation().addTrains(Set.of(train));
         });
 
         return new RoadMap(stations, roads, letters, trains);

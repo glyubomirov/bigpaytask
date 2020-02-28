@@ -56,7 +56,7 @@ public class FloydWarshallSearchComponentTest {
         for (int i = 0; i < actualResult.length; i++) {
             for (int j = 0; j < actualResult[i].length; j++) {
                 Assert.assertEquals(expectedResult[i][j],
-                        Arrays.stream(actualResult[i][j]).map(Road::getTime).mapToInt(Integer::valueOf).sum());
+                        Arrays.stream(actualResult[i][j]).map(Road::getTimeSteps).mapToInt(Integer::valueOf).sum());
 
                 // Check if all roads are in correct order
                 for (int k = 1; k < actualResult[i][j].length; k++) {

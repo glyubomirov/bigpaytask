@@ -15,7 +15,7 @@ public class RandomRoadMapService {
 
         Station[] stations = new Station[stationCount];
         for (int i = 0; i < stationCount; i++) {
-            stations[i] = new Station(String.valueOf((char)(i + 65)), i);
+            stations[i] = new Station(getStationName(i), i);
         }
 
         // create fully connected graph with random weights
@@ -61,15 +61,23 @@ public class RandomRoadMapService {
             letter.getInitialDest().unload(Set.of(letter));
         });
 
-        // Bind Trains to each Station
-        Arrays.stream(trains).forEach(train -> {
-            train.getStation().addTrains(Set.of(train));
-        });
-
         return new RoadMap(stations, roadSet.toArray(Road[]::new), letters, trains);
     }
 
-    static void shuffleStationList(Station[] stations, Random rand)
+
+    public static String getStationName(int number) {
+        StringBuilder resultBuilder = new StringBuilder();
+        int rem;
+        do {
+            rem = number % 26;
+            resultBuilder.append((char)(rem + 65));
+            number = number / 26 - 1;
+        } while(number > -1);
+
+        return resultBuilder.reverse().toString();
+    }
+
+    private static void shuffleStationList(Station[] stations, Random rand)
     {
         for (int i = 0; i < stations.length; i++)
         {

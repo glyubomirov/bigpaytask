@@ -1,7 +1,12 @@
 package com.bigpay.app.component;
 
-import com.bigpay.app.constants.Constants;
+import com.bigpay.app.domain.input.InputConstants;
 
+/**
+ * This class validates input data from standard input. It allows empty lines and commented lines with //
+ *
+ * @author ggeorgiev
+ */
 public class InputValidatorComponent {
 
     /**
@@ -10,25 +15,25 @@ public class InputValidatorComponent {
      * @param station
      */
     public static void validateStation(String station) {
-        if (station.trim().length() != 1) {
-            throw new IllegalArgumentException(
-                    String.format("Unexpected Station string length! Expected %s, but found %s", 1, station.length()));
+        if (station.trim().length() == 0) {
+            throw new IllegalArgumentException("Unexpected Station name length to be at least one symbol");
         }
     }
 
     /**
      * Validates road input data
      *
-     * @param roadData
+     * @param roadData list with road name and connecting stations
+     * @exception IllegalArgumentException in case of invalid input data
      */
     public static void validateRoad(String[] roadData) {
 
         // Number of arguments validation
-        if (roadData.length != Constants.ROAD_NUMBER_OF_ARGUMENTS) {
+        if (roadData.length != InputConstants.ROAD_NUMBER_OF_ARGUMENTS) {
 
             throw new IllegalArgumentException(String.format(
                     "Unexpected number of arguments for Road! Expects %d, but found %d number of arguments",
-                    Constants.ROAD_NUMBER_OF_ARGUMENTS, roadData.length));
+                    InputConstants.ROAD_NUMBER_OF_ARGUMENTS, roadData.length));
         }
 
         // 1st argument validation
@@ -53,16 +58,17 @@ public class InputValidatorComponent {
     /**
      * Validates road input data
      *
-     * @param letterData
+     * @param letterData list with letter name, source station, target station and weight
+     * @exception IllegalArgumentException in case of invalid input data
      */
     public static void validateLetter(String[] letterData) {
 
         // Number of arguments validation
-        if (letterData.length != Constants.LETTER_NUMBER_OF_ARGUMENTS) {
+        if (letterData.length != InputConstants.LETTER_NUMBER_OF_ARGUMENTS) {
 
             throw new IllegalArgumentException(String.format(
                     "Unexpected number of arguments for Road! Expects %d, but found %d number of arguments",
-                    Constants.LETTER_NUMBER_OF_ARGUMENTS, letterData.length));
+                    InputConstants.LETTER_NUMBER_OF_ARGUMENTS, letterData.length));
         }
 
         // 1st argument validation
@@ -94,16 +100,17 @@ public class InputValidatorComponent {
     /**
      * Validates train input data
      *
-     * @param trainData
+     * @param trainData list with train name, initial station and capacity
+     * @exception IllegalArgumentException in case of invalid input data
      */
     public static void validateTrain(String[] trainData) {
 
         // Number of arguments validation
-        if (trainData.length != Constants.TRAIN_NUMBER_OF_ARGUMENTS) {
+        if (trainData.length != InputConstants.TRAIN_NUMBER_OF_ARGUMENTS) {
 
             throw new IllegalArgumentException(String.format(
                     "Unexpected number of arguments for Train! Expects %d, but found %d number of arguments",
-                    Constants.TRAIN_NUMBER_OF_ARGUMENTS, trainData.length));
+                    InputConstants.TRAIN_NUMBER_OF_ARGUMENTS, trainData.length));
         }
 
         // 1st argument validation

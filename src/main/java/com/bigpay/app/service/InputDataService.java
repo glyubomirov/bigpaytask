@@ -2,7 +2,7 @@ package com.bigpay.app.service;
 
 import com.bigpay.app.domain.input.InputDataMap;
 import com.bigpay.app.component.InputValidatorComponent;
-import com.bigpay.app.constants.Constants;
+import com.bigpay.app.domain.input.InputConstants;
 import com.bigpay.app.domain.input.LetterInputData;
 import com.bigpay.app.domain.input.RoadInputData;
 import com.bigpay.app.domain.input.StationInputData;
@@ -141,7 +141,7 @@ public class InputDataService {
      */
     private static RoadInputData readRoad(Scanner scanner) {
 
-        String[] roadData = readArrayLine(scanner, Constants.ROAD_INPUT_DATA_DELIMITER);
+        String[] roadData = readArrayLine(scanner, InputConstants.ROAD_INPUT_DATA_DELIMITER);
 
         InputValidatorComponent.validateRoad(roadData);
 
@@ -156,7 +156,7 @@ public class InputDataService {
      */
     private static LetterInputData readLetter(Scanner scanner) {
 
-        String[] roadData = readArrayLine(scanner, Constants.LETTER_INPUT_DATA_DELIMITER);
+        String[] roadData = readArrayLine(scanner, InputConstants.LETTER_INPUT_DATA_DELIMITER);
 
         InputValidatorComponent.validateLetter(roadData);
 
@@ -170,7 +170,7 @@ public class InputDataService {
      */
     private static TrainInputData readTrain(Scanner scanner) {
 
-        String[] trainData = readArrayLine(scanner, Constants.TRAIN_INPUT_DATA_DELIMITER);
+        String[] trainData = readArrayLine(scanner, InputConstants.TRAIN_INPUT_DATA_DELIMITER);
 
         InputValidatorComponent.validateTrain(trainData);
 

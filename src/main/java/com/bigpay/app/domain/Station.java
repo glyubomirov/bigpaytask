@@ -1,11 +1,12 @@
 package com.bigpay.app.domain;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
- * Represent node in the task
+ * Represents Station(Node) from the task
+ *
+ * @author ggeorgiev
  */
 public class Station {
 
@@ -25,23 +26,19 @@ public class Station {
     private Set<Road> roads;
 
     /**
-     * All trains on this station
-     */
-    private Set<Train> trains;
-
-    /**
-     * Sequence index from inout data
+     * Station sequential index from inout data
      */
     private int index;
 
     /**
+     * Constructor used to create new Station instance
      *
-     * @param name
+     * @param name Station name
+     * @param index Station sequential index from inout data
      */
     public Station(String name, int index) {
         this.name = name;
         this.index = index;
-        this.trains = new HashSet<>();
         this.roads = new HashSet<>();
         this.letters = new HashSet<>();
     }
@@ -66,18 +63,6 @@ public class Station {
         return Set.copyOf(this.roads);
     }
 
-    public Set<Train> getTrains() {
-        return Set.copyOf(this.trains);
-    }
-
-    public void addTrains(Set<Train> trains) {
-        this.trains.addAll(trains);
-    }
-
-    public void removeTrains(Set<Train> trains) {
-        this.trains.removeAll(trains);
-    }
-
     public void unload(Set<Letter> letters) {
         if (letters == null) {
             return;
@@ -85,15 +70,6 @@ public class Station {
 
         letters.forEach(letter -> letter.unload(this));
         this.letters.addAll(letters);
-    }
-
-    public void load(Set<Letter> letters, Train train) {
-        if (letters == null) {
-            return;
-        }
-
-        this.letters.forEach(Letter::load);
-        this.letters.removeAll(letters);
     }
 
     public void load(Letter letter, Train train) {

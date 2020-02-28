@@ -28,32 +28,28 @@ mvn package
 Go to project directory and execute
 
 ```bash
-java -jar ./target/BigPayTask.jar
+java -jar ./target/BigPayTask.jar < simple_input.txt
 ```
+
+You can run it with more complex data
+```bash
+java -jar ./target/BigPayTask.jar < extended_input.txt
+```
+
 
 ## Terms
 
-* **Distance** - distance that train does for 1 time step (e.g 1 distance per 1 time step)
+* **Path** - Minimal distance between two stations
 
-* **Letter Path** - Distance between source and target Letter Station
+* **Connected Roads** - Roads that have common Station
 
-* **Total Letter Path** - Sum of all Letter Paths
+* **Connected Road List** - List Connected Roads where first and second road has common Station, second and third have common Station and etc. 
 
-* **Average Letter Path** - Total Letter Path divided by number of Letters
+* **Letter Path** - Path between source and target Letter Station
 
-* **Train Path** - Distance between current and target train Station
+* **Train Path** - Path between current and target train Station
 
-* **Total Letter Capacity** - Sum of all Letter Weights
-
-* **Total Train Capacity** - Sum of all capacity of all Trains
-
-* **Average Train Capacity** - Total Train Path divided by number of Trains
-
-* **Average Train Delivery Capacity** - Total Letter Capacity divided by Total Train Capacity
-
-* **Nearest Letter Path** - Distance between train and closest station with undelivered Letters
-
-* **Total Nearest Letter Path** - Distance between all empty trains and closest station with undelivered letters
+* **Nearest Letter Path** - Path between train and closest station with undelivered Letters
 
 ## Algorithm
 
