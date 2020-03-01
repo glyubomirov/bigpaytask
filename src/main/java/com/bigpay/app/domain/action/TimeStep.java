@@ -71,7 +71,7 @@ public class TimeStep {
     /**
      * Add action in action list
      *
-     * @param action
+     * @param action action that has to be added to action list
      */
     public void addAction(TrainActionable action) {
         if (this.actionMap.containsKey(action.getTrain())) {

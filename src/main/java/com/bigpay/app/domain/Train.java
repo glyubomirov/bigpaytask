@@ -67,7 +67,6 @@ public class Train {
     /**
      * Move train on the road, departs and arrives at station
      *
-     * @return true if train has moved
      */
     public void move() {
 
@@ -83,8 +82,7 @@ public class Train {
     /**
      * Processes train depart for next station
      *
-     * @param road
-     * @return true if departure is successful
+     * @param road road that trains departs to
      */
     public void depart(Road road) {
         if (!this.station.getRoads().contains(road)){ // if Station has not corresponding Road
@@ -100,7 +98,6 @@ public class Train {
     /**
      * Processes train arrival to next station. Unload letters fo the station.
      *
-     * @return true if arrival is successful
      */
     public void arrive() {
         if (this.timeOnRoad >= this.road.getTimeSteps()) { // if train arrives at the next station
@@ -126,7 +123,7 @@ public class Train {
     /**
      * Performs letter load from train to train
      *
-     * @param letter
+     * @param letter letter that has to be loade dto train
      */
     public void load(Letter letter) {
         if (letter.isDelivered() || letter.isInProcessing()) {

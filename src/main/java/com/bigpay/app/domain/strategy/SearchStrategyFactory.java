@@ -27,8 +27,8 @@ public class SearchStrategyFactory {
     /**
      * Chooses strategy that has be performed. There is only one strategy, but in future there could be added more strategies
      *
-     * @param strategyType
-     * @return
+     * @param strategyType type of strategy
+     * @return instance of type of strategy
      */
     public AbstractSearchStrategy getStrategy(StrategyType strategyType) {
         if (strategyType == StrategyType.GREEDY) {

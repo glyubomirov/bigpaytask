@@ -13,7 +13,7 @@ public class LetterInputData {
     private String name;
 
     /**
-     * Source letter station
+     * Letter source station
      */
     private String sourceStation;
 
@@ -30,10 +30,10 @@ public class LetterInputData {
     /**
      *
      *
-     * @param name
-     * @param sourceStation
-     * @param targetStation
-     * @param weight
+     * @param name Letter's name
+     * @param sourceStation letter source station
+     * @param targetStation letter target station
+     * @param weight letter weight
      */
     public LetterInputData(String name, String sourceStation, String targetStation, int weight ) {
         this.name = name;
@@ -52,7 +52,7 @@ public class LetterInputData {
 
     /**
      *
-     * @return source letter station
+     * @return letter source station
      */
     public String getSourceStation() {
         return this.sourceStation;
@@ -60,7 +60,7 @@ public class LetterInputData {
 
     /**
      *
-     * @return target letter station
+     * @return letter target station
      */
     public String getTargetStation() {
         return this.targetStation;

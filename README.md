@@ -98,3 +98,7 @@ If next station is in 1time step move it performs Arrive and Unload Action.
 2. If train is on the Road it performs Move action and if it reaches next station in one move then it performs Arrive and Unload Action, as well.
 
 Above process repeats until any Current Letter Destination is the same as Target Letter Destination.
+
+## Summary
+Algorithm is not optimal, there is a lot of room for optimisations. Also some code parts are must be refactored and 
+better documented. At this point application provides some solution for given mail train system.

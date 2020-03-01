@@ -33,6 +33,7 @@ public class TrainUnloadActionType implements TrainActionable {
      *
      * @param train train that loads
      * @param station station where train unloads letters to
+     * @param letters set of letters that have to unloaded
      */
     public TrainUnloadActionType(Train train, Station station, Set<Letter> letters) {
         this.train = train;
