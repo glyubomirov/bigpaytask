@@ -23,9 +23,7 @@ public class GreedySearchStrategyTest {
 
         TimeStep timeStep = strategy.getNextTimeStep(roadMap);
 
-        timeStepComponent.addTimeStep(timeStep);
-
-        timeStepComponent.process();
+        timeStepComponent.process(timeStep);
 
     }
 }

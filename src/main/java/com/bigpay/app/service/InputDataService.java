@@ -2,7 +2,7 @@ package com.bigpay.app.service;
 
 import com.bigpay.app.domain.input.InputDataMap;
 import com.bigpay.app.component.InputValidatorComponent;
-import com.bigpay.app.constants.Constants;
+import com.bigpay.app.domain.input.InputConstants;
 import com.bigpay.app.domain.input.LetterInputData;
 import com.bigpay.app.domain.input.RoadInputData;
 import com.bigpay.app.domain.input.StationInputData;
@@ -13,6 +13,8 @@ import java.util.Scanner;
 
 /**
  * Contains all input data as java object
+ *
+ * @author ggeorgiev
  */
 public class InputDataService {
 
@@ -66,7 +68,7 @@ public class InputDataService {
     /**
      * Read input and skips line that are empty or starts with // (comment)
      *
-     * @param scanner
+     * @param scanner input data scanner
      * @return read line from input
      */
     private static String readLine(Scanner scanner) {
@@ -103,9 +105,9 @@ public class InputDataService {
      *
      * Reads and coverts line from string(with delimiter) to array e.g. delimiter comma(,) A,B,C,D
      *
-     * @param scanner
-     * @param delimiter
-     * @return
+     * @param scanner input data scanner
+     * @param delimiter delimiter for values
+     * @return string values from input line
      */
     private static String[] readArrayLine(Scanner scanner, String delimiter) {
 
@@ -121,8 +123,8 @@ public class InputDataService {
     /**
      * Reads Station line data from the input
      *
-     * @param scanner
-     * @return
+     * @param scanner input data scanner
+     * @return reads Station information from input
      */
     private static StationInputData readStation(Scanner scanner) {
 
@@ -136,12 +138,12 @@ public class InputDataService {
     /**
      * Reads Road line data from the input
      *
-     * @param scanner
-     * @return
+     * @param scanner input data scanner
+     * @return reads Road information from input
      */
     private static RoadInputData readRoad(Scanner scanner) {
 
-        String[] roadData = readArrayLine(scanner, Constants.ROAD_INPUT_DATA_DELIMITER);
+        String[] roadData = readArrayLine(scanner, InputConstants.ROAD_INPUT_DATA_DELIMITER);
 
         InputValidatorComponent.validateRoad(roadData);
 
@@ -151,12 +153,12 @@ public class InputDataService {
     /**
      * Reads Letter line data from the input
      *
-     * @param scanner
-     * @return
+     * @param scanner input data scanner
+     * @return reads Letter information from input
      */
     private static LetterInputData readLetter(Scanner scanner) {
 
-        String[] roadData = readArrayLine(scanner, Constants.LETTER_INPUT_DATA_DELIMITER);
+        String[] roadData = readArrayLine(scanner, InputConstants.LETTER_INPUT_DATA_DELIMITER);
 
         InputValidatorComponent.validateLetter(roadData);
 
@@ -165,12 +167,12 @@ public class InputDataService {
     /**
      * Reads Train line data from the input
      *
-     * @param scanner
-     * @return
+     * @param scanner input data scanner
+     * @return reads Train information from input
      */
     private static TrainInputData readTrain(Scanner scanner) {
 
-        String[] trainData = readArrayLine(scanner, Constants.TRAIN_INPUT_DATA_DELIMITER);
+        String[] trainData = readArrayLine(scanner, InputConstants.TRAIN_INPUT_DATA_DELIMITER);
 
         InputValidatorComponent.validateTrain(trainData);
 

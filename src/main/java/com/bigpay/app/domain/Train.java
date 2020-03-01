@@ -2,14 +2,16 @@ package com.bigpay.app.domain;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * Represent train in the task
+ *
+ * @author ggeorgiev
  */
 public class Train {
+
     /**
-     * Name of te train
+     * Train name
      */
     private String name;
 
@@ -48,6 +50,13 @@ public class Train {
      */
     private int timeOnRoad;
 
+    /**
+     * Constructor used to create new train instance
+     *
+     * @param name train name
+     * @param station current train station
+     * @param capacity train capacity
+     */
     public Train(String name, Station station, int capacity) {
         this.name = name;
         this.station = station;
@@ -56,7 +65,7 @@ public class Train {
     }
 
     /**
-     * Move train on the road, departures and arrives at station
+     * Move train on the road, departs and arrives at station
      *
      * @return true if train has moved
      */
@@ -66,16 +75,16 @@ public class Train {
             return;
         }
 
-        if (this.timeOnRoad < this.road.getTime()) {
+        if (this.timeOnRoad < this.road.getTimeSteps()) {
             this.timeOnRoad++;
         }
     }
 
     /**
-     * Processes train depart at next station
+     * Processes train depart for next station
      *
      * @param road
-     * @return true if depart is successful
+     * @return true if departure is successful
      */
     public void depart(Road road) {
         if (!this.station.getRoads().contains(road)){ // if Station has not corresponding Road
@@ -94,7 +103,7 @@ public class Train {
      * @return true if arrival is successful
      */
     public void arrive() {
-        if (this.timeOnRoad >= this.road.getTime()) { // if train arrives at the next station
+        if (this.timeOnRoad >= this.road.getTimeSteps()) { // if train arrives at the next station
 
             this.station = this.nextStation;
             this.nextStation = null;
@@ -103,24 +112,24 @@ public class Train {
         }
     }
 
+
+    /**
+     * Checks if letter can be loaded in the train. If letter exceeds capacity it can not be loaded
+     *
+     * @param letter letter that check has to be performed for
+     * @return True if letter can be loaded in the train, false otherwise
+     */
     private boolean canLoadLetter(Letter letter) {
         return letter.getWeight() + this.size <= this.capacity;
     }
 
-    public void load(Set<Letter> letters) {
-        if (letters == null) {
-            return;
-        }
-
-        Set<Letter> unprocessedLetters = letters.stream()
-                .filter(letter -> !letter.isArrived() && !letter.isInProcessing())
-                .collect(Collectors.toSet());
-
-        unprocessedLetters.forEach(this::load);
-    }
-
+    /**
+     * Performs letter load from train to train
+     *
+     * @param letter
+     */
     public void load(Letter letter) {
-        if (letter.isArrived() || letter.isInProcessing()) {
+        if (letter.isDelivered() || letter.isInProcessing()) {
             return;
         }
 
@@ -131,6 +140,9 @@ public class Train {
         }
     }
 
+    /**
+     * Performs letter unload from train to station
+     */
     public void unload() {
         this.station.unload(this.letters);
         this.letters.clear();
@@ -138,44 +150,66 @@ public class Train {
     }
 
     /**
-     *  Calculates weight of letters
      *
-     * @param letters
-     * @return weight of letters
+     * @return train's name
      */
-    public static int calculateLoadSize(Set<Letter> letters) {
-        return letters.stream().mapToInt(Letter::getWeight).sum();
-    }
-
     public String getName() {
         return this.name;
     }
 
+    /**
+     *
+     * @return station that this train is on
+     */
     public Station getStation() {
         return this.station;
     }
 
+    /**
+     *
+     * @return station that train is traveling to
+     */
     public Station getNextStation() {
         return this.nextStation;
     }
 
+    /**
+     *
+     * @return train capacity
+     */
     public int getCapacity() {
         return this.capacity;
     }
 
+    /**
+     *
+     * @return  raid that this train is traveling on
+     */
     public Road getRoad() {
         return this.road;
     }
 
+    /**
+     *
+     * @return list of letters that train is transferring
+     */
     public Set<Letter> getLetters() {
         return Set.copyOf(this.letters);
     }
 
+    /**
+     *
+     * @return time in time steps that train spends on the road
+     */
     public int getTimeOnRoad() {
         return this.timeOnRoad;
     }
 
-    public int getFreeCapacity() {
+    /**
+     *
+     * @return weight that train can load
+     */
+    public int getFreeStace() {
         return this.capacity - this.letters.stream().mapToInt(Letter::getWeight).sum();
     }
 }
