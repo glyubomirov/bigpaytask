@@ -69,7 +69,7 @@ public class TrainDepartActionType implements TrainActionable {
      * @return Road that this train uses for departure
      */
     public Road getRoad() {
-        return road;
+        return this.road;
     }
 
     /**
@@ -85,7 +85,7 @@ public class TrainDepartActionType implements TrainActionable {
      * @return Station that train departs from
      */
     public Station getFromStation() {
-        return fromStation;
+        return this.fromStation;
     }
 
     /**
@@ -93,6 +93,6 @@ public class TrainDepartActionType implements TrainActionable {
      * @return Station that train departs for
      */
     public Station getToStation() {
-        return toStation;
+        return this.toStation;
     }
 }

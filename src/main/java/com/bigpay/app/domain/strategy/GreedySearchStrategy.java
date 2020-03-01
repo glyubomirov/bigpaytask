@@ -66,7 +66,7 @@ public class GreedySearchStrategy extends AbstractSearchStrategy {
 
                     timeStep.addAction(new TrainArriveActionType(train, train.getNextStation()));
 
-                    timeStep.addAction(new TrainUnloadActionType(train, train.getNextStation()));
+                    timeStep.addAction(new TrainUnloadActionType(train, train.getNextStation(), timeStep.getTrainLetters(train)));
                 }
 
             } else if (train.getStation() != null) { // If train is in the station
@@ -86,13 +86,13 @@ public class GreedySearchStrategy extends AbstractSearchStrategy {
                             if (timeStep.getTrainFreeSpace(train) == train.getCapacity()) {
 
                                 // adds load action
-                                road = roadMap.getShortestRoadMap()[letter.getCurrentDest().getIndex()][letter.getFinalDest().getIndex()][0];
+                                road = this.roadMap.getShortestRoadMap()[letter.getCurrentDest().getIndex()][letter.getFinalDest().getIndex()][0];
                                 timeStep.addAction(new TrainLoadActionType(train, letter, letter.getCurrentDest()));
                                 removedLetters.add(letter);
                             } else { // If this is not first latter that has to be loaded to train
 
                                 // if letter is in the same direction as already loaded letters
-                                if (road == roadMap.getShortestRoadMap()[letter.getCurrentDest().getIndex()][letter.getFinalDest().getIndex()][0]) {
+                                if (road == this.roadMap.getShortestRoadMap()[letter.getCurrentDest().getIndex()][letter.getFinalDest().getIndex()][0]) {
 
                                     // adds load action
                                     timeStep.addAction(new TrainLoadActionType(train, letter, letter.getCurrentDest()));
@@ -102,9 +102,6 @@ public class GreedySearchStrategy extends AbstractSearchStrategy {
                         }
                     }
                 }
-
-                // removes letters that are planned to be loaded
-                letters.removeAll(removedLetters);
 
                 // If thain is not on the road
                 if (road == null) {
@@ -119,8 +116,12 @@ public class GreedySearchStrategy extends AbstractSearchStrategy {
                     if (closestLetter != null) {
                         // sets road as direction fot closest letter
                         road = this.roadMap.getShortestRoadMap()[train.getStation().getIndex()][closestLetter.getCurrentDest().getIndex()][0];
+                        removedLetters.add(closestLetter);
                     }
                 }
+
+                // removes letters that are planned to be loaded
+                letters.removeAll(removedLetters);
 
                 // If there is road
                 if (road != null) {
@@ -140,7 +141,7 @@ public class GreedySearchStrategy extends AbstractSearchStrategy {
                         timeStep.addAction(new TrainArriveActionType(train, road.getCounterStation(train.getStation())));
 
                         // Adds unload action for thee train
-                        timeStep.addAction(new TrainUnloadActionType(train, road.getCounterStation(train.getStation())));
+                        timeStep.addAction(new TrainUnloadActionType(train, road.getCounterStation(train.getStation()), timeStep.getTrainLetters(train)));
                     }
                 }
 

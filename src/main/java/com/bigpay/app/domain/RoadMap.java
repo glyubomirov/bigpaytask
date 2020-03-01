@@ -68,15 +68,15 @@ public class RoadMap {
      */
     private void calculatePathMatrix() {
         // Checks is there is a path between every two Stations
-        for (int i = 0; i < stationList.length; i++) {
-            for (int j = 0; j < stationList.length; j++) {
+        for (int i = 0; i < this.stationList.length; i++) {
+            for (int j = 0; j < this.stationList.length; j++) {
 
                 // Checks if there is missing Path between two stations
-                if (shortestRoadMap[i][j] == null) {
+                if (this.shortestRoadMap[i][j] == null) {
                     throw new NonExistingPathException(String.format("There is no path between %s and %s",
                             this.stationList[i].getName(), this.stationList[j].getName()));
                 } else {
-                    this.cashedPathMatrix[i][j] = roadTimeSteps(shortestRoadMap[i][j]);
+                    this.cashedPathMatrix[i][j] = roadTimeSteps(this.shortestRoadMap[i][j]);
                 }
             }
         }
@@ -117,27 +117,27 @@ public class RoadMap {
      * @return List of all roads
      */
     public Road[] getRoads() {
-        return roadList.clone();
+        return this.roadList.clone();
     }
 
     /**
      * @return List of all letters
      */
     public Letter[] getLetters() {
-        return letterList.clone();
+        return this.letterList.clone();
     }
 
     /**
      * @return List of all trains
      */
     public Train[] getTrains() {
-        return trainList.clone();
+        return this.trainList.clone();
     }
 
     /**
      * @return Matrix wth list of roads that connects each two stations
      */
     public Road[][][] getShortestRoadMap() {
-        return shortestRoadMap.clone();
+        return this.shortestRoadMap.clone();
     }
 }

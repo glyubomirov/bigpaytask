@@ -69,7 +69,7 @@ public class TrainMoveActionType implements TrainActionable {
      * @return Station that train moves from
      */
     public Station getFromStation() {
-        return fromStation;
+        return this.fromStation;
     }
 
     /**
@@ -77,6 +77,6 @@ public class TrainMoveActionType implements TrainActionable {
      * @return Station that train moves to
      */
     public Station getToStation() {
-        return toStation;
+        return this.toStation;
     }
 }

@@ -39,7 +39,7 @@ public class TrainInputData {
      * @return train's name
      */
     public String getName() {
-        return name;
+        return this.name;
     }
 
     /**
@@ -47,7 +47,7 @@ public class TrainInputData {
      * @return station that this train is on
      */
     public String getStation() {
-        return station;
+        return this.station;
     }
 
     /**
@@ -55,6 +55,6 @@ public class TrainInputData {
      * @return train capacity
      */
     public int getCapacity() {
-        return capacity;
+        return this.capacity;
     }
 }

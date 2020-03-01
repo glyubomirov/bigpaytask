@@ -39,7 +39,7 @@ public class RoadInputData {
      * @return first Station that road has to be connected to
      */
     public String getSourceStation() {
-        return sourceStation;
+        return this.sourceStation;
     }
 
     /**
@@ -47,7 +47,7 @@ public class RoadInputData {
      * @return second Station that road has to be connected to
      */
     public String getTargetStation() {
-        return targetStation;
+        return this.targetStation;
     }
 
     /**
@@ -55,7 +55,7 @@ public class RoadInputData {
      * @return time that train needs to passes it
      */
     public int getTimeSteps() {
-        return time;
+        return this.time;
     }
 
 }

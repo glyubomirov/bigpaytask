@@ -33,7 +33,7 @@ public class Road {
      * @return Number of time steps that it takes a train to travel along an edge
      */
     public int getTimeSteps() {
-        return timeSteps;
+        return this.timeSteps;
     }
 
     /**

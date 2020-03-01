@@ -47,7 +47,7 @@ public class InputDataMap {
      * @return list of all station
      */
     public StationInputData[] getStationList() {
-        return stationList;
+        return this.stationList;
     }
 
     /**
@@ -55,7 +55,7 @@ public class InputDataMap {
      * @return list of all roads
      */
     public RoadInputData[] getRoadList() {
-        return roadList;
+        return this.roadList;
     }
 
     /**
@@ -63,7 +63,7 @@ public class InputDataMap {
      * @return list of all letters
      */
     public LetterInputData[] getLetterList() {
-        return letterList;
+        return this.letterList;
     }
 
     /**
@@ -71,6 +71,6 @@ public class InputDataMap {
      * @return list of all trains
      */
     public TrainInputData[] getTrainList() {
-        return trainList;
+        return this.trainList;
     }
 }

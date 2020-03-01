@@ -42,8 +42,8 @@ public class FloydWarshallSearchComponent {
     /**
      * Implementation of Floyd Warshall to find shortest path between each 2 Stations
      *
-     * @param roadMap
-     * @return
+     * @param roadMap road map
+     * @return 3D road map of (Station, Station, list of Roads between each two stations)
      */
     public Road[][][] generateShortestPath(RoadMap roadMap) {
         int stationCount = roadMap.getStations().length;
@@ -130,7 +130,7 @@ public class FloydWarshallSearchComponent {
     /**
      * Reverse road list
      *
-     * @param roads
+     * @param roads list of roads that has to be reversed
      */
     private static void reverseRoad(Road[] roads) {
         for (int i = 0; i < roads.length / 2; i++) {
@@ -141,11 +141,11 @@ public class FloydWarshallSearchComponent {
     }
 
     /**
-     * Smart merge of two Connected Road Lists. Result is Connected Road List.
+     * Smart merge of two Connected Road Lists. Result is Merged Road List.
      *
-     * @param roadArray1
-     * @param roadArray2
-     * @return Connected Road List
+     * @param roadArray1 array of roads
+     * @param roadArray2 array of roads
+     * @return Merged Road List
      */
     private static Road[] mergeRoadArrays(Road[] roadArray1, Road[] roadArray2) {
         if (roadArray1 == null || roadArray2 == null){

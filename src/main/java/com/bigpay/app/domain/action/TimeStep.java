@@ -1,8 +1,10 @@
 package com.bigpay.app.domain.action;
 
+import com.bigpay.app.domain.Letter;
 import com.bigpay.app.domain.Train;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * This class is used to store plan for each train what action it will take
@@ -97,6 +99,23 @@ public class TimeStep {
     }
 
     /**
+     * Get letters for a train after step has been executed
+     *
+     * @param train train
+     * @return set of letters
+     */
+    public Set<Letter> getTrainLetters(Train train) {
+        Set<Letter> resultSet = new HashSet(train.getLetters());
+        for (TrainActionable action : actionMap.get(train)) {
+            if (action.getActionType() == TrainActionType.LOAD) {
+                resultSet.add(((TrainLoadActionType)(action)).getLetter());
+            }
+        }
+
+        return resultSet;
+    }
+
+    /**
      * Print action step in readable format
      */
     public void print() {
@@ -109,9 +128,15 @@ public class TimeStep {
                             ((TrainLoadActionType)action).getLetter().getName()));
 
                 } else if (action.getActionType() == TrainActionType.UNLOAD) {
+                    TrainUnloadActionType unloadAction = ((TrainUnloadActionType)action);
 
-                    System.out.println(String.format("Train %s unloads all letters at station %s",
-                            item.getKey().getName(), ((TrainUnloadActionType)action).getStation().getName()));
+                    if (unloadAction.getLetters().size() > 0) {
+                        Set<String> letterList = unloadAction.getLetters().stream().map(Letter::getName).collect(Collectors.toSet());
+
+                        System.out.println(String.format("Train %s unloads %s letters at station %s",
+                                item.getKey().getName(), String.join(",", letterList), unloadAction.getStation().getName()));
+                    }
+
 
                 } else if (action.getActionType() == TrainActionType.DEPART) {
 

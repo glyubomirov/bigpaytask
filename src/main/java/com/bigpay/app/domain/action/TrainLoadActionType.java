@@ -78,6 +78,6 @@ public class TrainLoadActionType implements TrainActionable {
      * @return Station where train loads letter from
      */
     public Station getStation() {
-        return station;
+        return this.station;
     }
 }

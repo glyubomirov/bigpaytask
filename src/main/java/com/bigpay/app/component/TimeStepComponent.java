@@ -44,7 +44,7 @@ public class TimeStepComponent {
      * @return list with processed time steps
      */
     public List<TimeStep> getTimeStepList() {
-        return Collections.unmodifiableList(timeStepList);
+        return Collections.unmodifiableList(this.timeStepList);
     }
 
     /**

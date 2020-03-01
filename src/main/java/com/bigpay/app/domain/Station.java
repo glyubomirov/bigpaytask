@@ -48,7 +48,7 @@ public class Station {
      * @return station sequential index from input data
      */
     public int getIndex() {
-        return index;
+        return this.index;
     }
 
     /**
@@ -56,7 +56,7 @@ public class Station {
      * @return station's name
      */
     public String getName() {
-        return name;
+        return this.name;
     }
 
     /**

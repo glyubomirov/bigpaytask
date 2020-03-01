@@ -47,7 +47,7 @@ public class LetterInputData {
      * @return letter name
      */
     public String getName() {
-        return name;
+        return this.name;
     }
 
     /**
@@ -55,7 +55,7 @@ public class LetterInputData {
      * @return source letter station
      */
     public String getSourceStation() {
-        return sourceStation;
+        return this.sourceStation;
     }
 
     /**
@@ -63,7 +63,7 @@ public class LetterInputData {
      * @return target letter station
      */
     public String getTargetStation() {
-        return targetStation;
+        return this.targetStation;
     }
 
     /**
@@ -71,6 +71,6 @@ public class LetterInputData {
      * @return letter weight
      */
     public int getWeight() {
-        return weight;
+        return this.weight;
     }
 }

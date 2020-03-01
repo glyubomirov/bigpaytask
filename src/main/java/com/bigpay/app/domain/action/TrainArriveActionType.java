@@ -54,7 +54,7 @@ public class TrainArriveActionType implements TrainActionable {
      */
     @Override
     public void process() {
-        train.arrive();
+        this.train.arrive();
     }
 
     /**
@@ -62,6 +62,6 @@ public class TrainArriveActionType implements TrainActionable {
      * @return Station where train arrives to
      */
     public Station getStation() {
-        return station;
+        return this.station;
     }
 }

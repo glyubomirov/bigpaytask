@@ -12,7 +12,7 @@ public class InputValidatorComponent {
     /**
      * Validate Station input data
      *
-     * @param station
+     * @param station station name at least one character
      */
     public static void validateStation(String station) {
         if (station.trim().length() == 0) {

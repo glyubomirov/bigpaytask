@@ -1,7 +1,10 @@
 package com.bigpay.app.domain.action;
 
+import com.bigpay.app.domain.Letter;
 import com.bigpay.app.domain.Station;
 import com.bigpay.app.domain.Train;
+
+import java.util.Set;
 
 /**
  * Implementation of train unload action
@@ -21,14 +24,20 @@ public class TrainUnloadActionType implements TrainActionable {
     private Station station;
 
     /**
+     * Letters that have to unloaded
+     */
+    private Set<Letter> letters;
+
+    /**
      * Creates instance of train unload action
      *
      * @param train train that loads
      * @param station station where train unloads letters to
      */
-    public TrainUnloadActionType(Train train, Station station) {
+    public TrainUnloadActionType(Train train, Station station, Set<Letter> letters) {
         this.train = train;
         this.station = station;
+        this.letters = letters;
     }
 
     /**
@@ -62,6 +71,14 @@ public class TrainUnloadActionType implements TrainActionable {
      * @return station where train unloads letters to
      */
     public Station getStation() {
-        return station;
+        return this.station;
+    }
+
+    /**
+     *
+     * @return letters that have to unloaded
+     */
+    public Set<Letter> getLetters() {
+        return letters;
     }
 }

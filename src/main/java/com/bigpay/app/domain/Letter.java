@@ -65,49 +65,49 @@ public class Letter {
      * @return letter name
      */
     public String getName() {
-        return name;
+        return this.name;
     }
 
     /**
      * @return initial letter destination
      */
     public Station getInitialDest() {
-        return initialDest;
+        return this.initialDest;
     }
 
     /**
      * @return current Letter destination
      */
     public Station getCurrentDest() {
-        return currentDest;
+        return this.currentDest;
     }
 
     /**
      * @return final Letter destination
      */
     public Station getFinalDest() {
-        return finalDest;
+        return this.finalDest;
     }
 
     /**
      * @return Letter weight
      */
     public int getWeight() {
-        return weight;
+        return this.weight;
     }
 
     /**
      * @return true if letter is delivered to final destination
      */
     public boolean isDelivered() {
-        return isDelivered;
+        return this.isDelivered;
     }
 
     /**
      * @return true if letter is in train
      */
     public boolean isInProcessing() {
-        return isInProcessing;
+        return this.isInProcessing;
     }
 
     /**
@@ -122,6 +122,7 @@ public class Letter {
 
     /**
      * Unload letter from train to station
+     *
      * @param station Station where letter is unloaded
      */
     public void unload(Station station) {

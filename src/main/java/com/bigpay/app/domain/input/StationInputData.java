@@ -26,6 +26,6 @@ public class StationInputData {
      * @return station's name
      */
     public String getName() {
-        return name;
+        return this.name;
     }
 }
