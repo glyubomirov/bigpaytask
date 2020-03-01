@@ -37,6 +37,7 @@ java -jar ./target/BigPayTask.jar < extended_input.txt
 ```
 
 ![Link](https://github.com/glyubomirov/bigpaytask/blob/master/resources/simple_graph.png) 
+
 This is how graph looks like from simple input above
 
 ## Terms

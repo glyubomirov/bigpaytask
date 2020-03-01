@@ -99,6 +99,16 @@ public class FloydWarshallSearchComponent {
             firstRoadMatrix = resultRoadMatrix;
         }
 
+        // Check if there is path between each two stations
+        for (int i = 0; i < stationCount; i++) {
+            for (int j = i + 1; j < stationCount; j++) {
+                if (resultRoadMatrix[i][j] == null) {
+                    System.err.println(String.format("Path between %s and %s does not exists", stations[i].getName(), stations[j].getName()));
+                    System.exit(-1);
+                }
+            }
+        }
+
         // Reverse path for value under first matrix diagonal
         for (int i = 0; i < stationCount; i++) {
             for (int j = i + 1; j < stationCount; j++) {
