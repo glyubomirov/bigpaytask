@@ -10,14 +10,16 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 /**
+ * Generates road map based on input data
  *
+ * @author ggeorgiev
  */
 public class RoadMapService {
 
     /**
      * Generates relational object data from input object data
      *
-     * @param inputDataMap
+     * @param inputDataMap input data map
      * @return Generated road map from input data
      */
     public static RoadMap generate(InputDataMap inputDataMap) {

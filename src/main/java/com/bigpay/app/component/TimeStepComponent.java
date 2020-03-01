@@ -27,8 +27,8 @@ public class TimeStepComponent {
     }
 
     /**
-     * Get the single instance of this component
-     * @return instance of this component
+     *
+     * @return gets single instance of this class
      */
     public static synchronized TimeStepComponent getInstance() {
         if (instance == null) {

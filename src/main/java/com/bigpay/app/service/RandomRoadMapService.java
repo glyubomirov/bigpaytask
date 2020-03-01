@@ -6,6 +6,8 @@ import java.util.*;
 
 /**
  * This class is used for testing purposes. It generates random RoadMap based on some basic criteria
+ *
+ * @author ggeorgiev
  */
 public class RandomRoadMapService {
 

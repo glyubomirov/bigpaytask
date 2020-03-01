@@ -15,7 +15,7 @@ git clone https://github.com/glyubomirov/bigpaytask.git
 Go to project directory
 
 ```bash
-cd ./bigpayproject/
+cd ./bigpaytask/
 ```
 
 Use the package manager [maven](https://maven.apache.org/) to package build

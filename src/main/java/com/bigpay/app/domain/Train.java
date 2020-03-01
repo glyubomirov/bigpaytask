@@ -5,10 +5,13 @@ import java.util.Set;
 
 /**
  * Represent train in the task
+ *
+ * @author ggeorgiev
  */
 public class Train {
+
     /**
-     * Name of te train
+     * Train name
      */
     private String name;
 
@@ -47,6 +50,13 @@ public class Train {
      */
     private int timeOnRoad;
 
+    /**
+     * Constructor used to create new train instance
+     *
+     * @param name train name
+     * @param station current train station
+     * @param capacity train capacity
+     */
     public Train(String name, Station station, int capacity) {
         this.name = name;
         this.station = station;
@@ -55,7 +65,7 @@ public class Train {
     }
 
     /**
-     * Move train on the road, departures and arrives at station
+     * Move train on the road, departs and arrives at station
      *
      * @return true if train has moved
      */
@@ -71,10 +81,10 @@ public class Train {
     }
 
     /**
-     * Processes train depart at next station
+     * Processes train depart for next station
      *
      * @param road
-     * @return true if depart is successful
+     * @return true if departure is successful
      */
     public void depart(Road road) {
         if (!this.station.getRoads().contains(road)){ // if Station has not corresponding Road
@@ -102,10 +112,22 @@ public class Train {
         }
     }
 
+
+    /**
+     * Checks if letter can be loaded in the train. If letter exceeds capacity it can not be loaded
+     *
+     * @param letter letter that check has to be performed for
+     * @return True if letter can be loaded in the train, false otherwise
+     */
     private boolean canLoadLetter(Letter letter) {
         return letter.getWeight() + this.size <= this.capacity;
     }
 
+    /**
+     * Performs letter load from train to train
+     *
+     * @param letter
+     */
     public void load(Letter letter) {
         if (letter.isDelivered() || letter.isInProcessing()) {
             return;
@@ -118,41 +140,76 @@ public class Train {
         }
     }
 
+    /**
+     * Performs letter unload from train to station
+     */
     public void unload() {
         this.station.unload(this.letters);
         this.letters.clear();
         this.size = 0;
     }
 
+    /**
+     *
+     * @return train's name
+     */
     public String getName() {
         return this.name;
     }
 
+    /**
+     *
+     * @return station that this train is on
+     */
     public Station getStation() {
         return this.station;
     }
 
+    /**
+     *
+     * @return station that train is traveling to
+     */
     public Station getNextStation() {
         return this.nextStation;
     }
 
+    /**
+     *
+     * @return train capacity
+     */
     public int getCapacity() {
         return this.capacity;
     }
 
+    /**
+     *
+     * @return  raid that this train is traveling on
+     */
     public Road getRoad() {
         return this.road;
     }
 
+    /**
+     *
+     * @return list of letters that train is transferring
+     */
     public Set<Letter> getLetters() {
         return Set.copyOf(this.letters);
     }
 
+    /**
+     *
+     * @return time in time steps that train spends on the road
+     */
     public int getTimeOnRoad() {
         return this.timeOnRoad;
     }
 
-    public int getFreeCapacity() {
+    /**
+     *
+     * @return weight that train can load
+     */
+    public int getFreeStace() {
         return this.capacity - this.letters.stream().mapToInt(Letter::getWeight).sum();
     }
 }

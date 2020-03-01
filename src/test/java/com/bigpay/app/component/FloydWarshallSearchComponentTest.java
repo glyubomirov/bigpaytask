@@ -6,8 +6,9 @@ import com.bigpay.app.domain.Station;
 import com.bigpay.app.domain.input.*;
 import com.bigpay.app.helper.InputDataMapHelper;
 import com.bigpay.app.service.RoadMapService;
-import org.junit.Assert;
 import org.junit.Test;
+
+import static org.junit.Assert.*;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -22,18 +23,6 @@ public class FloydWarshallSearchComponentTest {
         RoadMap roadMap = RoadMapService.generate(inputDataMap);
 
         Road[][][] actualResult = roadMap.getShortestRoadMap();
-
-//        for (int i = 0; i < actualResult.length; i++) {
-//            for (int j = 0; j < actualResult[i].length; j++) {
-//                if (actualResult[i][j] != null) {
-//                    int pathLength = Arrays.stream(actualResult[i][j]).map(Road::getTime).mapToInt(Integer::valueOf).sum();
-//                    System.out.print(String.format("%-5d", pathLength));
-//                } else {
-//                    System.out.print("null ");
-//                }
-//            }
-//            System.out.println();
-//        }
 
         int[][] expectedResult = new int[][]{
                 { 0,  3,  8,  4,  8,  7,  6,  4, 14, 14, 13, 10,  5},
@@ -55,7 +44,7 @@ public class FloydWarshallSearchComponentTest {
 
         for (int i = 0; i < actualResult.length; i++) {
             for (int j = 0; j < actualResult[i].length; j++) {
-                Assert.assertEquals(expectedResult[i][j],
+                assertEquals(expectedResult[i][j],
                         Arrays.stream(actualResult[i][j]).map(Road::getTimeSteps).mapToInt(Integer::valueOf).sum());
 
                 // Check if all roads are in correct order
@@ -66,7 +55,7 @@ public class FloydWarshallSearchComponentTest {
                     Set<Station> commonStations = new HashSet<>(firstArrayStation);
                     commonStations.addAll(secondArrayStation);
 
-                    Assert.assertEquals(commonStations.size() + 1, firstArrayStation.size() + secondArrayStation.size());
+                    assertEquals(commonStations.size() + 1, firstArrayStation.size() + secondArrayStation.size());
                 }
 
                 // Assert that first Road is connected to source Station and final Road to final station
@@ -74,11 +63,10 @@ public class FloydWarshallSearchComponentTest {
                     Station sourceStation = stations[i];
                     Station targetStation = stations[j];
 
-//                    System.out.println(String.format("%d, %d", i, j));
-                    Assert.assertTrue(actualResult[i][j][0].getStations().contains(sourceStation));
-                    Assert.assertTrue(actualResult[i][j][actualResult[i][j].length - 1].getStations().contains(targetStation));
+                    assertTrue(actualResult[i][j][0].getStations().contains(sourceStation));
+                    assertTrue(actualResult[i][j][actualResult[i][j].length - 1].getStations().contains(targetStation));
                 } else {
-                    Assert.assertEquals(actualResult[i][j].length, 0);
+                    assertEquals(actualResult[i][j].length, 0);
                 }
             }
         }

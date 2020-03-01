@@ -11,22 +11,22 @@ import java.util.Set;
 public class Station {
 
     /**
-     * Station name
+     * Station's name
      */
     private String name;
 
     /**
-     * All letters on this station
+     * Set of letters on this station
      */
     private Set<Letter> letters;
 
     /**
-     * All roads that this station connects
+     * Set of roads that this station is connected
      */
     private Set<Road> roads;
 
     /**
-     * Station sequential index from inout data
+     * Station sequential index from input data
      */
     private int index;
 
@@ -43,26 +43,50 @@ public class Station {
         this.letters = new HashSet<>();
     }
 
+    /**
+     *
+     * @return station sequential index from input data
+     */
     public int getIndex() {
         return index;
     }
 
+    /**
+     *
+     * @return station's name
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     *
+     * @param road add connects road to station
+     */
     public void addRoad(Road road) {
         this.roads.add(road);
     }
 
+    /**
+     *
+     * @return set of letters on this station
+     */
     public Set<Letter> getLetters() {
         return Set.copyOf(this.letters);
     }
 
+    /**
+     *
+     * @return set of roads that this station is connected
+     */
     public Set<Road> getRoads() {
         return Set.copyOf(this.roads);
     }
 
+    /**
+     *
+     * @param letters unloads set of letters
+     */
     public void unload(Set<Letter> letters) {
         if (letters == null) {
             return;
@@ -72,6 +96,12 @@ public class Station {
         this.letters.addAll(letters);
     }
 
+    /**
+     * Loads letter on train
+     *
+     * @param letter letter that has be loaded
+     * @param train train that letter has to be loaded on
+     */
     public void load(Letter letter, Train train) {
         if (letter == null) {
             return;
