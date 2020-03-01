@@ -18,7 +18,7 @@ public class InputGenerator {
      */
     public static void main(String[] args) {
 
-        // 1. Reads input data
+        // Generates input data
         RoadMap roadMap = RandomRoadMapService.generate(30, 100, 200,  10,1);
 
         // Print number of stations and information for each station
