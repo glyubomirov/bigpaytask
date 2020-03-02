@@ -13,7 +13,7 @@ public class Train {
     /**
      * Train name
      */
-    private String name;
+    private final String name;
 
     /**
      * Station that train is on
@@ -28,7 +28,7 @@ public class Train {
     /**
      * Train load capacity
      */
-    private int capacity;
+    private final int capacity;
 
     /**
      * Train current load size
@@ -43,7 +43,7 @@ public class Train {
     /**
      * List of letters that train transports
      */
-    private Set<Letter> letters;
+    private final Set<Letter> letters;
 
     /**
      * Time that trains spends on the road
@@ -123,7 +123,7 @@ public class Train {
     /**
      * Performs letter load from train to train
      *
-     * @param letter letter that has to be loade dto train
+     * @param letter letter that has to be loaded to train
      */
     public void load(Letter letter) {
         if (letter.isDelivered() || letter.isInProcessing()) {

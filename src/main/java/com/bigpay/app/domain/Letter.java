@@ -11,17 +11,17 @@ public class Letter {
     /**
      * Letter name
      */
-    private String name;
+    private final String name;
 
     /**
      * Initial Letter destination
      */
-    private Station initialDest;
+    private final Station initialDest;
 
     /**
      * Final Letter destination
      */
-    private Station finalDest;
+    private final Station finalDest;
 
     /**
      * Current Letter destination
@@ -31,7 +31,7 @@ public class Letter {
     /**
      * Letter weight
      */
-    private int weight;
+    private final int weight;
 
     /**
      * Flag if letter is delivered

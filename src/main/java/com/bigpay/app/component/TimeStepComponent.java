@@ -16,7 +16,7 @@ import java.util.List;
 public class TimeStepComponent {
     private static TimeStepComponent instance;
 
-    private List<TimeStep> timeStepList;
+    private final List<TimeStep> timeStepList;
 
     /**
      * Private constructor

@@ -10,17 +10,17 @@ public class TrainInputData {
     /**
      * Train's name
      */
-    private String name;
+    private final String name;
 
     /**
      * Station that train is on
      */
-    private String station;
+    private final String station;
 
     /**
      * Train load capacity
      */
-    private int capacity;
+    private final int capacity;
 
     /**
      *

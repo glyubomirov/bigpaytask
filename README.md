@@ -54,7 +54,7 @@ This is how graph looks like from simple input above
 
 * **Nearest Letter Path** - Path between train and closest station with undelivered Letters
 
-* **Source Letter Destination** - Station that letter starts its jurney from.
+* **Source Letter Destination** - Station that letter starts its journey from.
 
 * **Current Letter Destination** - Station that letter belongs to. It is possible to be nul if letter is on the train.
 

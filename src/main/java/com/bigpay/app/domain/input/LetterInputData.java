@@ -10,22 +10,22 @@ public class LetterInputData {
     /**
      * Letter name
      */
-    private String name;
+    private final String name;
 
     /**
      * Letter source station
      */
-    private String sourceStation;
+    private final String sourceStation;
 
     /**
      * Target letter station
      */
-    private String targetStation;
+    private final String targetStation;
 
     /**
      * Letter weight
      */
-    private int weight;
+    private final int weight;
 
     /**
      *

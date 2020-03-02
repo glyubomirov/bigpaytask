@@ -16,17 +16,17 @@ public class TrainUnloadActionType implements TrainActionable {
     /**
      * Train that unloads letter
      */
-    private Train train;
+    private final Train train;
 
     /**
      * Station where train unloads letters to
      */
-    private Station station;
+    private final Station station;
 
     /**
      * Letters that have to unloaded
      */
-    private Set<Letter> letters;
+    private final Set<Letter> letters;
 
     /**
      * Creates instance of train unload action

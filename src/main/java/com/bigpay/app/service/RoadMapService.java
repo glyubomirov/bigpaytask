@@ -60,16 +60,10 @@ public class RoadMapService {
                 toArray(Train[]::new);
 
         // Bind roads to each Station
-        Arrays.stream(roads).forEach(road -> {
-            road.getStations().forEach(station -> {
-                station.addRoad(road);
-            });
-        });
+        Arrays.stream(roads).forEach(road -> road.getStations().forEach(station -> station.addRoad(road)));
 
         // Bind letters to each Station
-        Arrays.stream(letters).forEach(letter -> {
-            letter.getInitialDest().unload(Set.of(letter));
-        });
+        Arrays.stream(letters).forEach(letter -> letter.getInitialDest().unload(Set.of(letter)));
 
         return new RoadMap(stations, roads, letters, trains);
     }

@@ -14,17 +14,17 @@ public class TrainLoadActionType implements TrainActionable {
     /**
      * Train that loads letter
      */
-    private Train train;
+    private final Train train;
 
     /**
      * Letter that is loaded
      */
-    private Letter letter;
+    private final Letter letter;
 
     /**
      * Station where train loads letter from
      */
-    private Station station;
+    private final Station station;
 
     /**
      * Creates instance of train load action

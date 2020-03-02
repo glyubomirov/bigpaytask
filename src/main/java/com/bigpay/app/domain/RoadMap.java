@@ -15,32 +15,32 @@ public class RoadMap {
     /**
      * List of all stations
      */
-    private Station[] stationList;
+    private final Station[] stationList;
 
     /**
      * List of all roads
      */
-    private Road[] roadList;
+    private final Road[] roadList;
 
     /**
      * List of all letters
      */
-    private Letter[] letterList;
+    private final Letter[] letterList;
 
     /**
      * List of all trains
      */
-    private Train[] trainList;
+    private final Train[] trainList;
 
     /**
      * Matrix wth list of roads that connects each two stations
      */
-    private Road[][][] shortestRoadMap;
+    private final Road[][][] shortestRoadMap;
 
     /**
      * Matrix wth minimal distance between two stations
      */
-    private int[][] cashedPathMatrix;
+    private final int[][] cashedPathMatrix;
 
     /**
      * Constructor that generates road map of all stations, roads, letters and trains

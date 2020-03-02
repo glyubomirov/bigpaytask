@@ -11,12 +11,12 @@ public class Road {
     /**
      * Number of time steps that it takes a train to travel along an edge
      */
-    private int timeSteps;
+    private final int timeSteps;
 
     /**
      * Set of stations that this road connects
      */
-    private Set<Station> stations;
+    private final Set<Station> stations;
 
     /**
      * Constructor used to create new Road instance

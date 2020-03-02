@@ -10,7 +10,7 @@ public class StationInputData {
     /**
      * Station's name
      */
-    private String name;
+    private final String name;
 
     /**
      * Constructor used to create new Station instance

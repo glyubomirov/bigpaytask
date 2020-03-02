@@ -10,17 +10,17 @@ public class RoadInputData {
     /**
      * First Station that road has to be connected to
      */
-    private String sourceStation;
+    private final String sourceStation;
 
     /**
      * Second Station that road has to be connected to
      */
-    private String targetStation;
+    private final String targetStation;
 
     /**
      * Time that train needs to passes it
      */
-    private int time;
+    private final int time;
 
     /**
      *

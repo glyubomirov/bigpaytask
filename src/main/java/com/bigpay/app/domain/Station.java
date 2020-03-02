@@ -13,22 +13,22 @@ public class Station {
     /**
      * Station's name
      */
-    private String name;
+    private final String name;
 
     /**
      * Set of letters on this station
      */
-    private Set<Letter> letters;
+    private final Set<Letter> letters;
 
     /**
      * Set of roads that this station is connected
      */
-    private Set<Road> roads;
+    private final Set<Road> roads;
 
     /**
      * Station sequential index from input data
      */
-    private int index;
+    private final int index;
 
     /**
      * Constructor used to create new Station instance

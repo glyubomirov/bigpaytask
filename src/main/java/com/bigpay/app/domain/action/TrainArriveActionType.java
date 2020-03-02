@@ -13,12 +13,12 @@ public class TrainArriveActionType implements TrainActionable {
     /**
      * Train that arrives
      */
-    private Train train;
+    private final Train train;
 
     /**
      * Station where train arrives to
      */
-    private Station station;
+    private final Station station;
 
     /**
      * Creates instance of train arrive action

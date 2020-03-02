@@ -14,22 +14,22 @@ public class TrainDepartActionType implements TrainActionable {
     /**
      * Train that departs
      */
-    private Train train;
+    private final Train train;
 
     /**
      * Road that this train uses for departure
      */
-    private Road road;
+    private final Road road;
 
     /**
      * Station that train departs from
      */
-    private Station fromStation;
+    private final Station fromStation;
 
     /**
      * Station that train departs for
      */
-    private Station toStation;
+    private final Station toStation;
 
     /**
      * Creates instance of train departure action

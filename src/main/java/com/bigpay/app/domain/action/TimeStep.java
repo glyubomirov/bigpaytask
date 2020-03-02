@@ -17,17 +17,17 @@ public class TimeStep {
     /**
      * List of actions that have to be performed in sequential order
      */
-    private List<TrainActionable> actionList;
+    private final List<TrainActionable> actionList;
 
     /**
      * Map of list of actions per train
      */
-    private Map<Train, List<TrainActionable>> actionMap;
+    private final Map<Train, List<TrainActionable>> actionMap;
 
     /**
      * Time step sequential number
      */
-    private int id;
+    private final int id;
 
     /**
      *
@@ -105,7 +105,7 @@ public class TimeStep {
      * @return set of letters
      */
     public Set<Letter> getTrainLetters(Train train) {
-        Set<Letter> resultSet = new HashSet(train.getLetters());
+        Set<Letter> resultSet = new HashSet<>(train.getLetters());
         for (TrainActionable action : actionMap.get(train)) {
             if (action.getActionType() == TrainActionType.LOAD) {
                 resultSet.add(((TrainLoadActionType)(action)).getLetter());
@@ -121,39 +121,39 @@ public class TimeStep {
     public void print() {
         System.out.println(String.format("-------------------------- Time Step %d --------------------------", this.id));
 
-        this.getActionMap().entrySet().forEach(item -> item.getValue().stream().forEach(action -> {
-                if (action.getActionType() == TrainActionType.LOAD) {
+        this.getActionMap().forEach((key, value) -> value.forEach(action -> {
+            if (action.getActionType() == TrainActionType.LOAD) {
 
-                    System.out.println(String.format("Train %s loads letter %s", item.getKey().getName(),
-                            ((TrainLoadActionType)action).getLetter().getName()));
+                System.out.println(String.format("Train %s loads letter %s", key.getName(),
+                        ((TrainLoadActionType) action).getLetter().getName()));
 
-                } else if (action.getActionType() == TrainActionType.UNLOAD) {
-                    TrainUnloadActionType unloadAction = ((TrainUnloadActionType)action);
+            } else if (action.getActionType() == TrainActionType.UNLOAD) {
+                TrainUnloadActionType unloadAction = ((TrainUnloadActionType) action);
 
-                    if (unloadAction.getLetters().size() > 0) {
-                        Set<String> letterList = unloadAction.getLetters().stream().map(Letter::getName).collect(Collectors.toSet());
+                if (unloadAction.getLetters().size() > 0) {
+                    Set<String> letterList = unloadAction.getLetters().stream().map(Letter::getName).collect(Collectors.toSet());
 
-                        System.out.println(String.format("Train %s unloads %s letters at station %s",
-                                item.getKey().getName(), String.join(",", letterList), unloadAction.getStation().getName()));
-                    }
-
-
-                } else if (action.getActionType() == TrainActionType.DEPART) {
-
-                    System.out.println(String.format("Train %s departs from station %s for station %s", item.getKey().getName(),
-                            ((TrainDepartActionType)action).getFromStation().getName(),
-                            ((TrainDepartActionType)action).getToStation().getName()));
-
-                } else if (action.getActionType() == TrainActionType.ARRIVE) {
-
-                    System.out.println(String.format("Train %s arrives at station %s", item.getKey().getName(),
-                            ((TrainArriveActionType)action).getStation().getName()));
-
-                } else if (action.getActionType() == TrainActionType.MOVE) {
-
-                    System.out.println(String.format("Train %s moves to station %s", item.getKey().getName(),
-                            ((TrainMoveActionType)action).getToStation().getName()));
+                    System.out.println(String.format("Train %s unloads %s letters at station %s",
+                            key.getName(), String.join(",", letterList), unloadAction.getStation().getName()));
                 }
-            }));
+
+
+            } else if (action.getActionType() == TrainActionType.DEPART) {
+
+                System.out.println(String.format("Train %s departs from station %s for station %s", key.getName(),
+                        ((TrainDepartActionType) action).getFromStation().getName(),
+                        ((TrainDepartActionType) action).getToStation().getName()));
+
+            } else if (action.getActionType() == TrainActionType.ARRIVE) {
+
+                System.out.println(String.format("Train %s arrives at station %s", key.getName(),
+                        ((TrainArriveActionType) action).getStation().getName()));
+
+            } else if (action.getActionType() == TrainActionType.MOVE) {
+
+                System.out.println(String.format("Train %s moves to station %s", key.getName(),
+                        ((TrainMoveActionType) action).getToStation().getName()));
+            }
+        }));
     }
 }

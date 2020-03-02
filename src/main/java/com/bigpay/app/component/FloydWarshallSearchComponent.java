@@ -18,7 +18,6 @@ import java.util.stream.Collectors;
 public class FloydWarshallSearchComponent {
 
     private static FloydWarshallSearchComponent instance;
-    private int[][] cashedPathMatrix;
 
     /**
      * Private constructor
@@ -49,7 +48,6 @@ public class FloydWarshallSearchComponent {
         int stationCount = roadMap.getStations().length;
 
         Station[] stations = roadMap.getStations();
-        this.cashedPathMatrix = new int[stationCount][stationCount];
 
         // Initial matrix
         Road [][][]firstRoadMatrix = new Road[stationCount][stationCount][];

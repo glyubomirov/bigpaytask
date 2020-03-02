@@ -13,17 +13,17 @@ public class TrainMoveActionType implements TrainActionable {
     /**
      * Train that moves
      */
-    private Train train;
+    private final Train train;
 
     /**
      * Station that train moves from
      */
-    private Station fromStation;
+    private final Station fromStation;
 
     /**
      * Station that train moves to
      */
-    private Station toStation;
+    private final Station toStation;
 
     /**
      * Creates instance of train move action

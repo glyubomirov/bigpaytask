@@ -52,16 +52,10 @@ public class RandomRoadMapService {
         }
 
         // Bind roads to each Station
-        roadSet.forEach(road -> {
-            road.getStations().forEach(station -> {
-                station.addRoad(road);
-            });
-        });
+        roadSet.forEach(road -> road.getStations().forEach(station -> station.addRoad(road)));
 
         // Bind letters to each Station
-        Arrays.stream(letters).forEach(letter -> {
-            letter.getInitialDest().unload(Set.of(letter));
-        });
+        Arrays.stream(letters).forEach(letter -> letter.getInitialDest().unload(Set.of(letter)));
 
         return new RoadMap(stations, roadSet.toArray(Road[]::new), letters, trains);
     }

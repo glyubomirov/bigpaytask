@@ -9,25 +9,25 @@ public class InputDataMap {
     /**
      * List of all station
      */
-    private StationInputData[] stationList;
+    private final StationInputData[] stationList;
 
     /**
      * List of all roads
      */
-    private RoadInputData[] roadList;
+    private final RoadInputData[] roadList;
 
     /**
      * List of all letters
      */
-    private LetterInputData[] letterList;
+    private final LetterInputData[] letterList;
 
     /**
      * List of all trains
      */
-    private TrainInputData[] trainList;
+    private final TrainInputData[] trainList;
 
     /**
-     * Constructor used to create new ImputDataMap instance
+     * Constructor used to create new InputDataMap instance
      *
      * @param stationList list of all station
      * @param roadList list of al roads
