@@ -1,0 +1,39 @@
+Dev exercise
+
+You have been asked to write a control program for a mail train system.
+
+The system takes as inputs:
+
+ * A graph containing a set of nodes, N, and edges, E : N → N. Each edge has a (positive) journey time E_t – this is the number of time steps that it takes a train to travel along an edge (in either direction).
+ * Each node contains a set of letters, l in L. Each letter has an integer weight, W_l and a destination node D_l.
+ * You have a set of trains, q \in Q, each of which has an integer capacity, C_q. Each train is located at a node.
+
+Your program should output a list of moves. Each move has:
+
+* A time (T) at which the move happens.
+* A node  (N) at which the move happens.
+* A train, (Q) making the move.
+* A set of letters (O) to move onto the train at this node.
+* A set of letters (P) to move off the train at this node.
+* An edge (E) for the train to move down once the move completes.
+
+O and P may be empty.
+E may be the special value ‘null’, meaning that the train stays at N.
+O must be a subset of the letters currently located at N.
+Once a train has started down an edge, E: N1 → N2 it cannot be called back. It will arrive at N2 in E_t time units.
+A train can only be in one place at once. A train may only traverse an edge if it is at one node or the other of that edge. 
+No train may ever be overloaded.
+Any number of trains can be at the same node at the same time.
+A train can carry any number of letters, so long as the total weight of the letters is <= the capacity of the train.
+It is possible to load, unload and move a train in the same move.
+Any number of trains may traverse the same edge at the same time (this is somewhat unrealistic, but makes the problem easier to solve)
+
+At the end of your sequence of moves, all letters must have been moved off a train to their destination nodes.
+
+It would obviously be nice to generate a minimal (or at least relatively short) sequence of moves, but correctness is more important than optimality.
+
+Optimality, is measured by the maximum time of any move (ie. we are interested in schedules which minimise the time it takes to deliver the letters rather than that minimise the number of moves).
+
+We don't care where the trains end up at the end of the sequence of moves.
+
+
